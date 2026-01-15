@@ -1,9 +1,8 @@
 ---
-layout: page
+layout: single
 permalink: /teaching/
 title: Teaching
-description: #Materials for courses you taught. Replace this text with your description.
-nav: true
+author_profile: true
 ---
 
 TA for EECE 571F 2021w

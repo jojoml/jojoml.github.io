@@ -1,0 +1,7 @@
+// Add site-specific style tweaks here. The file is imported after the theme.
+
+// Widen content area and reduce side gutters slightly.
+.page,
+.archive {
+  max-width: 1100px;
+}

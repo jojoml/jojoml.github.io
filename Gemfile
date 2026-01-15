@@ -1,20 +1,15 @@
-source 'https://rubygems.org'
+source "https://rubygems.org"
+
+gem "jekyll", "~> 4.3"
+gem "minimal-mistakes-jekyll"
+gem "jekyll-include-cache"
+gem "webrick", "~> 1.8" # for local `jekyll serve` on Ruby 3.x
+
 group :jekyll_plugins do
-    gem 'jekyll'
-    gem 'jekyll-archives'
-    gem 'jekyll-diagrams'
-    gem 'jekyll-email-protect'
-    gem 'jekyll-feed'
-    gem 'jekyll-github-metadata'
-    gem 'jekyll-imagemagick'
-    gem 'jekyll-paginate-v2'
-    gem 'jekyll-scholar'
-    gem 'jekyll-sitemap'
-    gem 'jekyll-target-blank'
-    gem 'jekyll-twitter-plugin'
-    gem 'jemoji'
-    gem 'unicode_utils'
-    gem 'webrick'
-    gem 'htmlcompressor'
-    gem 'htmlbeautifier'
+  gem "jekyll-feed"
+  gem "jekyll-sitemap"
+  gem "jekyll-paginate-v2"
+  gem "jemoji"
+  gem "jekyll-scholar"
+  gem "jekyll-twitter-plugin"
 end

@@ -3,13 +3,8 @@
 ---
 @charset "utf-8";
 
-// Dimensions
-$max-content-width: {{ site.max_width }};
+// Minimal Mistakes base styles
+@import "minimal-mistakes/skins/default";
+@import "minimal-mistakes";
 
-@import
-  "variables",
-  "themes",
-  "layout",
-  "base",
-  "distill"
-;
+// Place any custom overrides in _sass/custom.scss
