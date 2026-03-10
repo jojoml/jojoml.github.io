@@ -3,27 +3,22 @@ title: "Thoughts on autoresearch"
 date: 2026-03-10
 ---
 
-Andrej Karpathy's [`autoresearch`](https://github.com/karpathy/autoresearch) repo has been getting a lot of attention because it shows the potential of automating a very labor-intensive part of research. In Karpathy's setup, the agent edits a training file, runs a fixed five-minute experiment, checks whether `val_bpb` improved, and then either keeps or discards the change. That makes the objective concrete, and agents like Claude Code can do surprisingly well when they are given a fixed target like minimizing a validation loss.
-
-Part of why it has felt so visible is how quickly it took off. By March 10, 2026, the GitHub repo page showed about 20k stars, while the commit history goes back only to March 6, 2026.
+Andrej Karpathy's [`autoresearch`](https://github.com/karpathy/autoresearch) repo has been getting a lot of attention because it frames research as a simple loop: edit a training file, run a fixed five-minute experiment, and keep the change only if `val_bpb` improves. That kind of concrete objective is exactly why agents like Claude Code can do reasonably well here. By March 10, 2026, the GitHub repo page showed about 20k stars, while the commit history goes back only to March 6, 2026.
 
 ![Progress plot from karpathy/autoresearch](https://raw.githubusercontent.com/karpathy/autoresearch/master/progress.png)
 
 *A concrete loop like this is a big part of why the setup feels promising: the agent can try a change, get a verifiable result quickly, and keep iterating.*
 
-What feels promising to me is not just that it automates hyperparameter tuning. It shows that current agents already have the ability to automate something that has been hard to automate with ordinary coding or other rigid workflows, because research iteration needs flexibility.
+However, I think a lot of the excitement around `autoresearch` overstates what is coming from the agent itself. An important part of its success comes from other places as well: having a clear objective, a fast verification loop, and a small setting that still transfers.
 
 At the same time, I think the success of `autoresearch` is built on a lot of prior work in turning large and expensive research questions into mini-settings. From [`nanoGPT`](https://github.com/karpathy/nanoGPT) to [`nanochat`](https://github.com/karpathy/nanochat), Karpathy has spent a lot of effort scaling things down so research can iterate quickly while still maintaining correlation with the larger setting. If you look closely at `nanochat`, you can see that scaling matters a lot there, because a finding in a minimal setup is only useful if it transfers.
 
 The [`nanochat` repo](https://github.com/karpathy/nanochat) makes this very explicit with its small-scale scaling-law experiments, and the [Jan 7 miniseries discussion](https://github.com/karpathy/nanochat/discussions/420) gives more context for that direction.
 
 ![Scaling laws from karpathy/nanochat](https://raw.githubusercontent.com/karpathy/nanochat/master/dev/scaling_laws_jan26.png)
-
-*This is the kind of small setting I mean: not just smaller for convenience, but smaller in a way that still aims to preserve a useful scaling trend.*
-
 Another important part is the work that went into building datasets and evaluations that can support this kind of mini-research while preserving transfer to the larger problem. That part matters at least as much as the agent itself.
 
-To me, the hard part is not just being given a research objective. The hard part is taking an objective that is expensive to verify and translating it into a small setting that is fast to verify and iterate on, without losing too much of the chance that success in the small setting transfers back to the original one.
+**To me, the hard part is not just being given a research objective. The hard part is taking an objective that is expensive to verify and translating it into a small setting that is fast to verify and iterate on, without losing too much of the chance that success in the small setting transfers back to the original one.** This requires insights.
 
 This is also where the bottleneck changes. Before you shrink a costly setting into a small one, the bottleneck is the runtime of the experiment. If one experiment takes two days, then after two days a human still has enough time to analyze the result, read the report, and start the next run. In that case, the main bottleneck is not human productivity. It is experiment cost in time.
 
