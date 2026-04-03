@@ -1,8 +1,0 @@
-{% assign src = include.path | default: include.image_path | default: include.image_url %}
-{% assign alt_text = include.title | default: include.alt | default: "" %}
-<figure class="{{ include.class | default: 'mm-figure' }}">
-  <img src="{{ src | relative_url }}" alt="{{ alt_text }}" {% if include.zoomable %}data-zoomable{% endif %}>
-  {% if include.caption or include.title %}
-    <figcaption>{{ include.caption | default: include.title }}</figcaption>
-  {% endif %}
-</figure>
