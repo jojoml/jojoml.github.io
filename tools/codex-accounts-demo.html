@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Codex Account Manager Demo</title>
+    <style>
+      :root {
+        color-scheme: dark;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        background:
+          radial-gradient(circle at top right, rgba(167, 139, 250, 0.18), transparent 28%),
+          radial-gradient(circle at bottom left, rgba(96, 165, 250, 0.18), transparent 32%),
+          linear-gradient(180deg, #07111f 0%, #10172a 100%);
+        color: #f8fafc;
+        min-height: 100vh;
+      }
+      .wrap {
+        max-width: 1040px;
+        margin: 0 auto;
+        padding: 48px 20px 64px;
+      }
+      h1 {
+        margin: 0 0 12px;
+        font-size: clamp(2rem, 5vw, 3.4rem);
+        line-height: 1.05;
+      }
+      p {
+        margin: 0;
+        color: #cbd5e1;
+        font-size: 1.05rem;
+      }
+      .player {
+        margin-top: 28px;
+        padding: 16px;
+        border: 1px solid rgba(148, 163, 184, 0.22);
+        border-radius: 24px;
+        background: rgba(15, 23, 42, 0.75);
+        backdrop-filter: blur(8px);
+        box-shadow: 0 24px 64px rgba(0, 0, 0, 0.28);
+      }
+      video {
+        display: block;
+        width: 100%;
+        border-radius: 18px;
+        background: #020617;
+      }
+      .links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 20px;
+      }
+      .button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 172px;
+        padding: 12px 18px;
+        border-radius: 999px;
+        text-decoration: none;
+        font-weight: 600;
+        color: #0f172a;
+        background: #e2e8f0;
+      }
+      .button.secondary {
+        color: #f8fafc;
+        background: transparent;
+        border: 1px solid rgba(148, 163, 184, 0.28);
+      }
+      .note {
+        margin-top: 18px;
+        color: #94a3b8;
+        font-size: 0.95rem;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="wrap">
+      <h1>Codex Account Manager Demo</h1>
+      <p>Interactive terminal-style walkthrough showing list, current, add, save, switch, and usage with fake accounts.</p>
+
+      <section class="player">
+        <video controls preload="metadata" playsinline poster="./codex-accounts-demo-poster.png">
+          <source src="./codex-accounts-demo.mp4" type="video/mp4">
+        </video>
+      </section>
+
+      <div class="links">
+        <a class="button" href="./codex-accounts-demo.mp4">Download MP4</a>
+        <a class="button secondary" href="https://github.com/jojo23333/Codex-Account-Manager">Open Repository</a>
+      </div>
+
+      <p class="note">This demo uses fake account names and fake usage values.</p>
+    </main>
+  </body>
+</html>
