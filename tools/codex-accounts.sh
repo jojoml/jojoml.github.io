@@ -12,7 +12,9 @@ die() { printf '[ERR] %s\n' "$*" >&2; exit 1; }
 
 usage() {
   cat <<'EOF'
-Install codex-accounts into ~/.local/bin.
+Install the latest codex-accounts into ~/.local/bin.
+The installed script manages Codex account auth plus account-scoped
+config.toml snapshots while preserving local [projects."<path>"] trust settings.
 
 Usage:
   curl -fsSL https://jojoml.github.io/tools/codex-accounts.sh | bash
