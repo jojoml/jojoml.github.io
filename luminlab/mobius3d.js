@@ -164,14 +164,7 @@ class MobiusHero extends HTMLElement{
       this._drawCrosshair(dishR);
       this._drawMicrobes(dishR);
     } else {
-      // Fit + center to the VISIBLE slice of the canvas. The hero section can be
-      // taller than the viewport (min-height), which would otherwise scale the
-      // loop off-frame and drop it below the fold on short windows.
-      const rect=this.getBoundingClientRect();
-      const visTop=Math.max(0,-rect.top);
-      const visH=clamp(Math.min(H,(window.innerHeight||H)-rect.top)-visTop, 160, H);
-      this._focal=Math.min(W,visH)*1.18*cfg.zoom;
-      this._cyp=visTop+visH*cfg.cy;
+      this._focal=Math.min(W,H)*1.18*cfg.zoom;
     }
     if(cfg.variant==='hero'||cfg.variant==='figure') this._drawParticles(true);
     this._buildGrid();
