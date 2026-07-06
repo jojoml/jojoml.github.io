@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LuminLab</title>
+<script>
+  (function () {
+    document.documentElement.style.background = '#070a12';
+    document.documentElement.style.visibility = 'hidden';
+
+    fetch('/luminlab/index.html', { cache: 'no-cache' })
+      .then(function (response) {
+        if (!response.ok) throw new Error('Unable to load LuminLab page');
+        return response.text();
+      })
+      .then(function (html) {
+        var page = html.replace(/<head([^>]*)>/i, '<head$1><base href="/luminlab/">');
+        document.open();
+        document.write(page);
+        document.close();
+      })
+      .catch(function () {
+        window.location.replace('/luminlab/');
+      });
+  })();
+</script>
+</head>
+<body>
+<p><a href="/luminlab/">Open LuminLab</a></p>
+</body>
+</html>
