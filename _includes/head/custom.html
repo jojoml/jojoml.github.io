@@ -1,31 +1,3 @@
-<script>
-  (function () {
-    var luminScienceHosts = ['luminscience.io', 'www.luminscience.io'];
-    var isLuminScienceHost = luminScienceHosts.indexOf(window.location.hostname) !== -1;
-    var isRootPath = window.location.pathname === '/' || window.location.pathname === '/index.html';
-
-    if (!isLuminScienceHost || !isRootPath) return;
-
-    document.documentElement.style.background = '#070a12';
-    document.documentElement.style.visibility = 'hidden';
-
-    fetch('/luminlab/index.html', { cache: 'no-cache' })
-      .then(function (response) {
-        if (!response.ok) throw new Error('Unable to load LuminLab page');
-        return response.text();
-      })
-      .then(function (html) {
-        var page = html.replace(/<head([^>]*)>/i, '<head$1><base href="/luminlab/">');
-        document.open();
-        document.write(page);
-        document.close();
-      })
-      .catch(function () {
-        document.documentElement.style.visibility = '';
-      });
-  })();
-</script>
-
 <!-- MathJax 3 for LaTeX rendering -->
 <script>
   window.MathJax = {
