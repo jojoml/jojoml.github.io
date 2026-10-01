@@ -1,5 +1,5 @@
 ---
-title: "Agentic Hill-Climbing for Science Discovery: A Taste of Protein Language Models"
+title: "Hill-Climbing a Protein Language Model: A Taste of Autoresearch for Scientific Discovery"
 date: 2026-09-30
 description: "Our AgenticLS 2026 workshop paper on turning protein language model training into an environment where agents can do research."
 excerpt: "Our AgenticLS 2026 workshop paper on turning protein language model training into an environment where agents can do research."
@@ -31,8 +31,8 @@ excerpt: "Our AgenticLS 2026 workshop paper on turning protein language model tr
 </style>
 
 <div class="lede">
-<p>Recursive self-improvement (RSI) has shown great potential of pushing the boundaries of scientific discovery. While we see much progress being made with autonomous research in science [<a href="#ref-1">1</a>, <a href="#ref-2">2</a>], we believe that there is still one big gap: a setup that connects scientific questions to a hill-climbable environment for agents.</p>
-<p>RSI rarely works on a science problem out of the box, and this project aims to get a taste of what it takes to change that. In the spirit of NanoGPT, we made protein language model research hill-climbable, with an open 666M-protein corpus, a readable trainer, frozen evaluations and an explicit protocol, and we show that a plain sequential search with a human gate already produces a much better training recipe than the ESMC baseline.</p>
+<p>Recursive self-improvement (RSI) has recently shown great promise for scientific discovery: agentic hill-climbing has sped up biomolecular models [<a href="#ref-1">1</a>], improved LM training and GPU kernels [<a href="#ref-2">2</a>], and maxed out Atari Breakout [<a href="#ref-3">3</a>]. However, RSI does not work out of the box on an arbitrary science problem. We believe the hard part is not the climbing but the hill: choosing the right research question, scoping the search space, and designing evaluations that track real scientific progress. This project offers a first taste of what it takes to build such a hill.</p>
+<p>In the spirit of NanoGPT, we made protein language model research hill-climbable, with an open 666M-protein corpus, a readable trainer, frozen evaluations and an explicit protocol, and we show that a plain sequential search with a human gate already produces a much better training recipe than the ESMC baseline.</p>
 </div>
 
 ## A better PLM recipe by hill-climbing NanoProteinLM
@@ -125,4 +125,5 @@ Muchen Li (University of British Columbia) and Chixiang Lu (The University of Ho
 <ol class="refs">
 <li id="ref-1">Anthropic. <a href="https://www.anthropic.com/research/claude-uplifts-biomolecular-modeling">How Claude is uplifting biomolecular modeling</a>. September 2026.</li>
 <li id="ref-2">Recursive Superintelligence, Inc. <a href="https://www.recursive.com/articles/first-steps-toward-automated-ai-research">First steps toward automated AI research</a>. June 2026.</li>
+<li id="ref-3">Jiayi Weng. <a href="https://trinkle23897.github.io/learning-beyond-gradients/">Learning beyond gradients</a>. May 2026.</li>
 </ol>
