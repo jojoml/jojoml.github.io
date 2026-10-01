@@ -7,7 +7,7 @@ toc: false
 classes: wide
 ---
 
-I'm currently a Second Year PHD student at University of British Columbia, Vancouver, supervised by Professor [Lenoid Sigal](https://www.cs.ubc.ca/~lsigal/) and Professor [Renjie Liao](https://lrjconan.github.io/). My research interest lies in Machine Learning and Computer Vision.
+I'm currently a Second Year PHD student at University of British Columbia, Vancouver, supervised by Professor [Leonid Sigal](https://www.alphaxiv.org/@leonid-sigal) and Professor [Renjie Liao](https://www.alphaxiv.org/@renjie-liao). My research interest lies in Machine Learning and Computer Vision.
 
 I received my B.Eng Degree in the Department of Computer Science at Huazhong University of Sci and Tech (HUST) in 2019. After that, I worked as a research assistant at MVIG lab, Shanghai Jiao Tong University (SJTU) from Sep. 2019 to June. 2020 under the supervision of [Prof. Cewu Lu (SJTU)](https://www.mvig.org/). I've also been worked closely with [Dr. Xiangyu Xu (NTU)](https://sites.google.com/view/xiangyuxu) & [Dr. Wenxiu Sun (SenseTime)](http://wenxiusun.com/) during my internship at SenseTime.
 
