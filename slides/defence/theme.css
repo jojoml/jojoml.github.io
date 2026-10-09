@@ -1,0 +1,689 @@
+/* Defence deck theme.
+ *
+ * PowerPoint-translatable by construction (see DESIGN.md):
+ *   - fixed 1280 x 720 canvas (= 13.333 x 7.5 in at 96 px/in);
+ *   - every element is absolutely placed in slide coordinates;
+ *   - only fade / rise builds and Morph-style slide transitions;
+ *   - no blur, filters, 3-D or CSS-only effects that PowerPoint lacks.
+ */
+@import url("lib/fonts/inter/opsz.css");
+@import url("lib/fonts/inter/opsz-italic.css");
+@import url("lib/fonts/source-serif-4/opsz.css");
+@import url("lib/fonts/source-serif-4/opsz-italic.css");
+
+:root {
+  --paper: #ffffff;
+  --ink: #14213d;      /* titles, key marks */
+  --text: #2b3342;     /* body */
+  --muted: #525c6e;    /* secondary text (≥ 6.7:1 on white) */
+  --faint: #8c96a7;    /* citations, page numbers only */
+  --rule: #e4e7ec;     /* hairlines */
+  --panel: #f6f7f9;    /* card fill */
+  --panel-2: #eef1f4;
+
+  --teal: #1c7c8c;     /* explicit structure */
+  --teal-2: #6fb0bb;
+  --teal-t: #e4f1f3;
+  --terra: #b4502f;    /* implicit dependency */
+  --terra-2: #dc9a80;
+  --terra-t: #fbece6;
+  --todo: #d32f2f;     /* author to-dos (remove before the defence) */
+
+  --serif: "Source Serif 4 Variable", "Source Serif 4", Georgia, serif;
+  --sans: "Inter Variable", Inter, "Helvetica Neue", Arial, sans-serif;
+  --ease: cubic-bezier(.22, .7, .2, 1);
+}
+
+/* ---------- canvas ---------- */
+html, body, .reveal-viewport { background: var(--paper); }
+.reveal {
+  font-family: var(--sans);
+  font-size: 20px;
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  font-optical-sizing: auto;
+}
+.reveal .slides { text-align: left; }
+.reveal .slides > section { padding: 0 !important; width: 1280px; height: 720px; }
+/* zero-specificity reset, so each text role's own weight applies (a .reveal p rule used to override them all) */
+:where(.reveal) :is(h1, h2, h3, p) { margin: 0; font-weight: inherit; }
+.reveal .slides section .abs { position: absolute; box-sizing: border-box; }
+.reveal img { display: block; max-width: none; }
+
+/* ---------- slide chrome ---------- */
+/* Header (DESIGN.md): the heading names the project and the part of it ("LatentHOI · Training") and stays
+   the same across consecutive slides; the claim line under it is the one sentence the slide proves, said aloud. */
+.kicker {
+  position: absolute; left: 72px; top: 38px; width: 1136px;
+  font: 650 34px/1.15 var(--sans); letter-spacing: -.012em; color: var(--ink);
+}
+.kicker .proj { color: var(--teal); }
+.kicker .sep { color: var(--faint); font-weight: 400; margin: 0 .12em; }
+.kicker.ink .proj { color: var(--muted); }
+.title {
+  position: absolute; left: 72px; top: 88px; width: 1136px;
+  font: 500 23px/1.3 var(--sans); letter-spacing: -.003em; color: var(--text);
+}
+.lede {
+  position: absolute; left: 72px; top: 124px; width: 1136px;
+  font: 400 20px/1.45 var(--sans); color: var(--muted);
+}
+.pgnum {
+  position: absolute; right: 52px; bottom: 28px;
+  font: 500 12px/1 var(--sans); color: var(--faint); font-variant-numeric: tabular-nums;
+}
+
+/* ---------- text roles ---------- */
+.caps { font: 650 14px/1.2 var(--sans); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.caps.teal { color: var(--teal); }
+.caps.terra { color: var(--terra); }
+.lead { font: 600 23px/1.25 var(--sans); color: var(--ink); }
+.body { font: 400 19px/1.45 var(--sans); color: var(--text); }
+.cap { font: 400 17px/1.4 var(--sans); color: var(--muted); }
+.cite { font: 400 13px/1.45 var(--sans); color: var(--faint); }
+.todo { font: 500 14px/1.35 var(--sans); color: var(--todo); }
+.em-teal { color: var(--teal); font-weight: 600; }
+.em-terra { color: var(--terra); font-weight: 600; }
+.em-ink { color: var(--ink); font-weight: 600; }
+.takeaway {
+  position: absolute; left: 72px; width: 1136px;
+  padding-left: 18px; border-left: 3px solid var(--teal);
+  font: 500 20px/1.4 var(--sans); color: var(--ink);
+}
+.takeaway.terra { border-left-color: var(--terra); }
+
+.tag {
+  display: inline-block; padding: 6px 11px 5px; border-radius: 999px;
+  font: 600 12.5px/1 var(--sans); letter-spacing: .01em; white-space: nowrap;
+  background: var(--teal-t); color: var(--teal);
+}
+.tag.terra { background: var(--terra-t); color: var(--terra); }
+.tag.grey { background: var(--panel-2); color: var(--muted); }
+
+.card { position: absolute; box-sizing: border-box; background: var(--panel); border-radius: 14px; }
+.vrule { position: absolute; width: 1px; background: var(--rule); }
+
+/* ---------- math ---------- */
+.reveal .katex { font-size: 1.08em; }
+.m-i { font-family: KaTeX_Math, "Times New Roman", serif; font-style: italic; }
+.m-r { font-family: KaTeX_Main, "Times New Roman", serif; font-style: normal; }
+
+/* ---------- figures (inline SVG = PowerPoint shapes) ---------- */
+.fig { position: absolute; overflow: visible; }
+.fig text { font-family: var(--sans); font-size: 15px; fill: var(--muted); }
+.fig .t-ink { fill: var(--ink); font-weight: 600; }
+.fig .t-teal { fill: var(--teal); font-weight: 600; }
+.fig .t-terra { fill: var(--terra); font-weight: 600; }
+.fig .t-serif { font-family: var(--sans); font-style: italic; font-size: 16px; }
+.fig .chip-t { font-size: 14px; fill: var(--ink); font-weight: 500; }
+
+/* ---------- builds (PowerPoint: Entrance › Fade / Float In) ---------- */
+.reveal .fragment {
+  transition: opacity .5s var(--ease), transform .6s var(--ease), visibility .5s;
+  transition-delay: calc(var(--d, 0) * 130ms);
+}
+.reveal .fragment.rise { transform: translateY(12px); }
+.reveal .fragment.rise.visible { transform: none; }
+/* invisible triggers that drive scripted figure states (PowerPoint: Morph pair) */
+.reveal .fragment.trigger { position: absolute; width: 0; height: 0; overflow: hidden; }
+/* line draw-on (PowerPoint: Entrance › Wipe) — paths carry pathLength="1" */
+.reveal .fragment.draw { opacity: 1; visibility: inherit; }
+.reveal .fragment.draw .d { stroke-dasharray: 1 1; stroke-dashoffset: 1; transition: stroke-dashoffset 1s var(--ease); transition-delay: calc(var(--d, 0) * 130ms); }
+.reveal .fragment.draw.visible .d { stroke-dashoffset: 0; }
+
+/* ---------- title slide ---------- */
+.t-kicker { font: 650 13px/1 var(--sans); letter-spacing: .16em; text-transform: uppercase; color: var(--teal); }
+.t-title { margin-top: 22px !important; font: 600 54px/1.06 var(--sans); letter-spacing: -.018em; color: var(--ink); }
+.t-sub { margin-top: 18px !important; font: italic 400 26px/1.3 var(--sans); color: var(--muted); }
+.t-rule { width: 56px; height: 3px; background: var(--teal); margin: 40px 0 26px; }
+.t-name { font: 600 23px/1.3 var(--sans); color: var(--ink); }
+.t-meta { margin-top: 6px !important; font: 400 16px/1.45 var(--sans); color: var(--muted); }
+
+/* ---------- slide: generative modeling ---------- */
+:root { --cond: #4f5bb5; --cond-t: #eceefb; }   /* the condition c */
+.eq { text-align: center; color: var(--ink); font-size: 96px; line-height: 1; white-space: nowrap; }
+.eq .sub { font-size: .46em; vertical-align: -.32em; margin-left: .02em; margin-right: .04em; }
+.eq .bar { margin: 0 .16em; }
+.eq .c { position: relative; color: var(--cond); }
+/* click 1: θ is a neural network (θ turns teal; "θ : [network]" appears below) */
+.eq .th { transition: color .6s var(--ease); }
+#gen-model.nn-on .eq .th { color: var(--teal); }
+.nn-row { display: flex; justify-content: center; align-items: center; gap: 14px; }
+.nn-row .th-big { font-size: 46px; color: var(--teal); }
+.nn-row .colon { font-size: 40px; color: var(--ink); margin-right: 10px; }
+.nn-label { margin-top: 2px; text-align: center; font: 400 16px/1 var(--sans); color: var(--muted); }
+/* the condition box hangs off c, so it follows c while the equation re-centres */
+.eq .c-anchor { position: absolute; left: 50%; bottom: 0; width: 0; height: 0; }
+.eq .c-anchor svg { position: absolute; }
+.eq .nn-cap { position: absolute; white-space: nowrap; font: 400 16px/1 var(--sans); font-style: normal; color: var(--muted); }
+/* click 2: "| c" grows into the equation (PowerPoint: Morph between two slides) */
+.reveal .fragment.cond { font-size: 0; opacity: 0; transition: font-size .8s var(--ease), opacity .45s ease .25s; }
+.reveal .fragment.cond.visible { font-size: 1em; opacity: 1; }
+/* …and the condition selects one mode of the samples */
+#gen-model .comp { transition: opacity .7s var(--ease) .3s; }
+#gen-model.cond-on .comp:not(.k1) { opacity: .14; }
+
+/* ---------- slide: generative modeling with structured data ---------- */
+:root { --xred: #c8364b; }   /* the data x */
+/* after the Morph: "| c" folds away, θ returns to ink and x lights up in red
+   (PowerPoint: Morph to a slide without "| c", then Emphasis › Font colour) */
+#what .cond-out { font-size: 0; opacity: 0; }
+#what .x-red { color: var(--xred); }
+.reveal section.present .cond-out { animation: cond-out .8s var(--ease) .05s both; }
+.reveal section.present .th-out { animation: th-out .8s var(--ease) .1s both; }
+.reveal section.present .x-red { animation: x-red .6s var(--ease) .85s both; }
+@keyframes cond-out { from { font-size: 1em; opacity: 1; } to { font-size: 0; opacity: 0; } }
+@keyframes th-out { from { color: var(--teal); } to { color: var(--ink); } }
+@keyframes x-red { from { color: var(--ink); } to { color: var(--xred); } }
+/* transitions between projects: a slide of their own, the author's words (2026-10-08) */
+.br-t { text-align: center; font: 600 31px/1.4 var(--sans); color: var(--ink); }
+.br-t b { font-weight: 700; color: var(--terra); }
+.br-t b.teal { color: var(--teal); }
+
+/* group headings, then each pair of data types wipes in (PowerPoint: Entrance › Fade / Wipe from left) */
+.dhead { text-align: center; padding-bottom: 10px; border-bottom: 1.5px solid var(--rule); }
+.dhead .caps { color: var(--ink); }
+.reveal .fragment.wipe { clip-path: inset(0 100% 0 0); transition: clip-path .75s var(--ease), opacity .4s ease, visibility .4s; transition-delay: calc(var(--d, 0) * 180ms); }
+.reveal .fragment.wipe.visible { clip-path: inset(0 0 0 0); }
+.dcell { text-align: center; }
+.dcell .name { margin-top: 12px; font: 600 20px/1.25 var(--sans); color: var(--ink); }
+.dcell .what { margin-top: 3px; font: 400 16px/1.35 var(--sans); color: var(--muted); }
+.dcell .app, .appcol .app { display: flex; justify-content: center; align-items: center; gap: 8px; margin-top: 14px; font: 600 16px/1.2 var(--sans); color: var(--teal); }
+
+/* ---------- this thesis → why study the structure ---------- */
+.stmt { font: 400 34px/1.4 var(--sans); color: var(--ink); text-align: center; }
+.qhead { font: 600 56px/1.1 var(--sans); letter-spacing: -.016em; color: var(--ink); }
+/* the statement steps back when the question appears (PowerPoint: Emphasis › Transparency) */
+.reveal .fragment.dim-out { opacity: 1; visibility: inherit; }
+.reveal .fragment.dim-out.visible { opacity: .32; }
+
+/* ---------- two viewpoints ---------- */
+.vp { display: flex; align-items: flex-start; gap: 14px; }
+.badge { flex: none; width: 30px; height: 30px; border-radius: 50%; margin-top: 2px;
+  font: 700 15px/30px var(--sans); color: #fff; text-align: center; }
+.badge.teal, .dot.teal { background: var(--teal); }
+.badge.terra, .dot.terra { background: var(--terra); }
+.vp-t { font: 600 24px/1.28 var(--sans); color: var(--ink); }
+.crop { overflow: hidden; border-radius: 12px; background: #fff; border: 1px solid var(--rule); }
+.cimg { position: absolute; background-size: 100% 100%; background-repeat: no-repeat; }
+.pcap { text-align: center; font: 400 16px/1.35 var(--sans); color: var(--muted); }
+
+/* ---------- the line of work ---------- */
+.legend { display: flex; align-items: center; gap: 10px; }
+.legend .dot { flex: none; width: 11px; height: 11px; border-radius: 50%; }
+.legend .vp-t { font-size: 17px; font-weight: 500; color: var(--text); }
+.crop.thumb { border-radius: 9px; }
+.crop.dim { opacity: .45; }
+.crop.dim .cimg { filter: grayscale(1); }
+.tl { text-align: center; }
+.tl .yr { font: 600 14px/1 var(--sans); letter-spacing: .06em; color: var(--muted); }
+.tl .nm { margin-top: 10px; font: 600 18px/1.2 var(--sans); color: var(--ink); }
+.tl .vmark { height: 30px; margin-top: 10px; display: flex; justify-content: center; align-items: center; }
+.tl .vlogo { height: 26px; width: auto; }
+.tl .vlogo.tall { height: 32px; }   /* the TMLR mark carries its own margins */
+.tl .vpill { padding: 5px 10px 4px; border: 1px dashed var(--faint); border-radius: 999px;
+  font: 600 12px/1 var(--sans); color: var(--muted); letter-spacing: .03em; }
+.tl .vn { margin-top: 7px; font: 500 15px/1.3 var(--sans); color: var(--muted); }
+.tl .note { margin-top: 3px; font: 400 12.5px/1.3 var(--sans); color: var(--faint); }
+.tl.dim .nm { color: var(--faint); }
+.tl.dim .vlogo { opacity: .6; filter: grayscale(1); }
+
+/* ---------- roadmap anchor (shown before each project) ---------- */
+.rbar { height: 6px; border-radius: 3px; background: linear-gradient(90deg, var(--teal), var(--terra)); }
+.rdot { width: 18px; height: 18px; border-radius: 50%; box-sizing: border-box; background: #fff; border: 3px solid var(--teal); }
+.rdot.terra { border-color: var(--terra); }
+.rdot.mixd { border-color: #8a6a5a; }
+.rdot.cur { background: var(--ink); border-color: var(--ink); outline: 5px solid rgba(20, 33, 61, .12); }
+.crop.rstop.cur { border: 2px solid var(--ink); }
+.crop.rstop.off, .rlab.off, .rdot.off { opacity: .32; }
+.rlab { text-align: center; }
+.rlab .nm { font: 600 20px/1.2 var(--sans); color: var(--ink); }
+.rlab .idea { margin-top: 6px; font: 400 17px/1.35 var(--sans); color: var(--muted); }
+
+/* ---------- project slides ---------- */
+.stat .big { font: 650 42px/1.05 var(--sans); color: var(--ink); letter-spacing: -.015em; }
+.stat .big sup { font-size: .5em; vertical-align: .9em; }
+.stat .lbl { margin-top: 6px; font: 400 17px/1.4 var(--sans); color: var(--muted); }
+.stat .mid { font: 500 20px/1.4 var(--sans); color: var(--ink); }
+.gp-cite { display: flex; align-items: center; gap: 10px; }
+.gp-cite img { height: 22px; width: auto; }
+.pmask { background: var(--paper); }
+.math-line { text-align: center; font: 400 17px/1.4 var(--sans); color: var(--muted); }
+.math-line .katex { font-size: 1.15em; color: var(--ink); }
+.limit { font: 400 18px/1.45 var(--sans); color: var(--text); }
+.limit span { margin-right: 12px; font: 650 14px/1 var(--sans); letter-spacing: .1em; text-transform: uppercase; color: var(--terra); }
+.tbl { border-collapse: collapse; font: 400 16px/1.3 var(--sans); color: var(--text); }
+.tbl th { padding: 0 12px 10px; font: 650 12px/1 var(--sans); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); text-align: right; border-bottom: 1.5px solid var(--ink); }
+.tbl th:first-child, .tbl td:first-child { text-align: left; padding-left: 0; }
+.tbl td { padding: 14px 12px; text-align: right; border-bottom: 1px solid var(--rule); font-variant-numeric: tabular-nums; }
+.tbl td:first-child { font-weight: 600; color: var(--ink); }
+.tbl td span { display: block; margin-top: 3px; font: 400 13px/1.2 var(--sans); color: var(--muted); }
+.tbl .hi { color: var(--teal); font-weight: 700; }
+.tbl th.hi { color: var(--teal); }
+
+/* ---------- main part: shared bits ---------- */
+.crop.plain { border: none; border-radius: 0; background: transparent; }
+.box { border: 1.5px solid var(--ink); border-radius: 14px; background: #fff; text-align: center;
+  display: flex; flex-direction: column; justify-content: center; }
+.bx-t { font: 600 20px/1.2 var(--sans); color: var(--ink); }
+.bx-s { margin-top: 4px; font: 400 16px/1.3 var(--sans); color: var(--muted); }
+.stat .vs { font: 400 .5em/1 var(--sans); color: var(--muted); margin: 0 .2em; }
+.stat .big.sm { font-size: 36px; }
+.mid-say { font: 500 21px/1.45 var(--sans); color: var(--ink); }
+.callout { font: 500 18px/1.4 var(--sans); padding-left: 14px; border-left: 3px solid; }
+.callout.terra { color: var(--terra); border-color: var(--terra); }
+.callout.teal { color: var(--teal); border-color: var(--teal); }
+.math-line.big { font-size: 21px; }
+.math-line.big .katex { font-size: 1.5em; }
+.lgd p { display: flex; align-items: center; gap: 10px; margin: 0 0 12px; font: 400 17px/1.2 var(--sans); color: var(--text); }
+.lgd i { width: 16px; height: 16px; border-radius: 4px; display: inline-block; }
+
+/* LatentHOI task */
+.io .caps { margin-bottom: 12px; }
+.io-row { display: flex; align-items: center; gap: 14px; margin: 0 0 14px; font: 400 18px/1.35 var(--sans); color: var(--ink); }
+.io-ico { width: 34px; text-align: center; font: 600 20px/1 var(--sans); color: var(--ink); }
+.vid { border-radius: 12px; overflow: hidden; background: #fff; border: 1px solid var(--rule); }
+.vid video { width: 100%; height: 100%; object-fit: contain; display: block; }
+
+/* language bridge */
+.card.lvl { padding: 24px 28px; }
+.lvl .lv-ex { margin-top: 16px; font: 400 18px/1.6 var(--sans); color: var(--text); }
+.lvl .lv-ex b { color: var(--terra); }
+.lvl .lv-say { margin-top: 16px; font: 600 19px/1.35 var(--sans); color: var(--ink); }
+.lvl .tag { position: absolute; right: 24px; bottom: 22px; }
+.lvl .done { position: absolute; right: 100px; bottom: 20px; font: 700 20px/1 var(--sans); color: var(--teal); }
+.lvl.dimmed { opacity: .4; }
+.steps { margin-top: 22px; display: flex; align-items: center; gap: 10px; }
+.steps span { padding: 9px 14px; border-radius: 9px; border: 1.5px solid var(--grey2, #aab3be); background: #fff; font: 500 16px/1 var(--sans); color: var(--ink); }
+.steps span.ans { border-color: var(--terra); color: var(--terra); }
+.steps i { font-style: normal; color: var(--terra); font-weight: 700; }
+
+/* MoME routing examples */
+.rt-tok { font: 600 22px/1 var(--sans); color: var(--ink); margin-bottom: 14px; }
+.rt-row { padding: 10px 0 12px; border-top: 1px solid var(--rule); }
+.rt-row.chg { border-top: 1.5px dashed var(--terra); }
+.rt-row .sense { display: inline-block; padding: 4px 9px 3px; border-radius: 999px; background: var(--panel-2); font: 600 11.5px/1 var(--sans); color: var(--muted); letter-spacing: .03em; }
+.rt-row.chg .sense { background: var(--terra); color: #fff; }
+.rt-row p { margin-top: 6px !important; font: 400 15.5px/1.35 var(--sans); color: var(--text); }
+.rt-row em { font-style: normal; font-weight: 700; color: var(--ink); }
+.rt-row .post { color: var(--faint); }
+.rt-row .slots { margin-top: 7px; display: flex; gap: 5px; }
+.rt-row .slots b { width: 52px; height: 24px; border-radius: 5px; background: #eef1f4; font: 500 12px/24px var(--sans); color: var(--faint); text-align: center; }
+.rt-row .slots b.lo { background: #fff; border: 1px solid var(--terra); color: var(--terra); line-height: 22px; }
+.rt-row .slots b.on { background: var(--terra); color: #fff; font-weight: 700; }
+.tbl td small { display: block; font: 400 11.5px/1.2 var(--sans); color: var(--faint); }
+.tbl td.hi small { color: var(--teal); opacity: .8; }
+
+/* reused figures (original images from the papers, poster and past talks; slides/assets/reuse/SOURCES.md) */
+.pic { display: block; }
+.pic.frame { border: 1px solid var(--rule); border-radius: 10px; }
+/* highlight boxes: red, all of them (author, 2026-10-08: "revise all bounding boxes to red if not otherwise specified") */
+:root { --hl: #d62b2b; }
+.hl { border: 2.5px solid var(--hl); border-radius: 7px; background: rgba(214, 43, 43, .06); pointer-events: none; }
+.hl.terra { border-color: var(--hl); background: rgba(214, 43, 43, .06); }
+.hl.soft { border: 2px dashed var(--hl); background: transparent; }
+.loop-lab { font: 500 17px/1.3 var(--sans); color: var(--ink); }
+.stepcap { text-align: center; font: 500 20px/1.4 var(--sans); color: var(--ink); }
+.mid-say.sm { font-size: 19px; }
+
+/* slides 3–5: structures in data, timeline by data type */
+.kw { display: inline-block; font-weight: 600; color: var(--ink); }
+.badge.ink { background: var(--ink); }
+.lv { display: flex; align-items: flex-start; gap: 14px; }
+.lv-t { font: 600 24px/1.25 var(--sans); color: var(--ink); }
+.lv-s { margin-top: 6px; font: 400 18px/1.35 var(--sans); color: var(--muted); }
+.hrule { height: 1px; background: var(--rule); }
+.appcol .app { margin-top: 10px; }
+.appimg.contain { background-size: contain; }
+.appimg.logos { display: flex; justify-content: center; align-items: center; gap: 36px; }
+.appimg.logos figure { margin: 0; text-align: center; }
+.appimg.logos img { width: 74px; height: 74px; margin: 0 auto; }
+.appimg.logos figcaption { margin-top: 7px; font: 500 14px/1 var(--sans); color: var(--muted); }
+.appimg { height: 132px; border-radius: 10px; border: 1px solid var(--rule); background: #fff center / cover no-repeat; }
+/* the same token in two contexts (implicit-structure slide) */
+.ctx { font: 400 25px/1.3 var(--sans); color: var(--text); white-space: nowrap; }
+.ctx .tok { font-weight: 600; padding: 0 3px; border-radius: 4px; }
+.ctx .tok.a { color: var(--teal); background: var(--teal-t); }
+.ctx .tok.b { color: var(--terra); background: var(--terra-t); }
+.ctx-g { font: 400 17px/1.3 var(--sans); color: var(--muted); }
+.plus { font: 300 40px/1 var(--sans); color: var(--faint); text-align: center; }
+.vrule { border-left: 1.5px solid var(--rule); }
+.stack img { position: absolute; display: block; border: 1px solid var(--rule); border-radius: 8px; background: #fff; }
+.refs { font: 400 12.5px/1.45 var(--sans); color: var(--faint); }
+.dtype { display: flex; align-items: flex-end; justify-content: center; height: 36px; text-align: center;
+  font: 600 13px/1.3 var(--sans); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.crop.fitbox { background: #fff; }
+.cimg.fit { left: 4%; top: 4%; width: 92%; height: 92%; background-size: contain; background-position: center; }
+.reveal .fragment.dim-out.visible.crop .cimg, .reveal .tl.fragment.dim-out.visible .vlogo { filter: grayscale(1); }
+.rbar.plain { background: #d5dae1; }
+.rdot.plain { border-color: var(--ink); }
+
+/* summary anchors: roadmap + the project's takeaway */
+.sumpts { margin: 0; padding: 0; list-style: none; }
+.sumpts li { position: relative; padding-left: 22px; margin: 0 0 9px; font: 400 18px/1.4 var(--sans); color: var(--text); }
+.sumpts li::before { content: ""; position: absolute; left: 4px; top: 10px; width: 7px; height: 7px; border-radius: 50%; background: var(--ink); }
+.ib { display: inline-block; }
+
+/* publications during the PhD */
+.publist { margin: 0; padding: 0; list-style: none; }
+.publist li { display: flex; gap: 14px; margin: 0 0 13px; }
+.publist .py { flex: none; width: 38px; padding-top: 2px; font: 600 12px/1.3 var(--sans); color: var(--faint); letter-spacing: .04em; }
+.publist .pt { font: 600 14.5px/1.3 var(--sans); color: var(--ink); }
+.publist .pa { margin-top: 3px !important; font: 400 12.5px/1.35 var(--sans); color: var(--muted); }
+.publist .pa b { color: var(--ink); font-weight: 600; }
+.publist .pv { color: var(--text); font-weight: 500; }
+.publist .pstar { color: var(--teal); }
+
+/* GraphPNAS: graph representation slide (layout of CRV slide 6) */
+.gl-lab { font: 400 19px/1.3 var(--sans); color: var(--ink); text-align: right; }
+.gl-sym { font: 400 34px/1 KaTeX_Math, "Times New Roman", serif; color: var(--ink); }
+
+/* LatentHOI: manuscript assets, editable pipeline modules and click builds. */
+.ai { color: #2455ae; } /* HTML equivalent of the thesis's \\AI{...}. */
+.uncertain { color: var(--todo); }
+.lh-img { object-fit: contain; }
+.lh-center { text-align: center; }
+.lh-label { font: 600 20px/1.35 var(--sans); color: var(--ink); }
+.lh-small { font: 400 18px/1.35 var(--sans); color: var(--text); }
+.lh-body { font: 400 23px/1.4 var(--sans); color: var(--text); }
+.lh-heading { font: 600 26px/1.25 var(--sans); color: var(--ink); }
+.lh-formal { font-size: 25px; color: #111; }
+.lh-formal.lg { font-size: 34px; }
+.lh-formal.xl { font-size: 44px; }
+.lh-sym { text-align: center; font: 500 16px/1.25 var(--sans); color: var(--muted); }
+.lh-video { background: white; }
+.lh-video video { object-fit: contain; width: 100%; height: 100%; }
+.lh-vtag { text-align: center; font: 600 14px/1.2 var(--sans); color: var(--terra); }
+.lh-prompt { font: italic 500 19px/1.3 var(--sans); color: var(--ink); }
+.lh-stage { padding: 12px 0; border-bottom: 2px solid var(--rule); font: 500 18px/1.3 var(--sans); color: var(--muted); }
+.lh-stage.active { border-color: var(--teal); color: var(--teal); font-weight: 650; }
+.lh-module { color: var(--ink); }
+.lh-module svg { position: absolute; width: 100%; height: 100%; }
+.lh-module polygon { fill: #c4eafa; stroke: #a0d3e4; stroke-width: .7; }
+.lh-module > div { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; text-align: center; font: 650 22px/1.25 var(--sans); }
+.lh-module small { position: absolute; bottom: -28px; left: 0; width: 100%; text-align: center; font: 600 16px/1 var(--sans); color: var(--text); }
+.lh-module.frozen polygon { fill: #e3eaf0; stroke: #b6c3ce; }
+.lh-arrow path, .lh-loop path { fill: none; stroke: #1c7c8c; stroke-width: 2.5; }
+.lh-loop path { stroke: #98a2b3; stroke-width: 2; }
+.lh-codes { display: flex; gap: 9px; align-items: center; height: 41px; }
+.lh-code { width: 37px; height: 37px; display: inline-block; background: #d9efd2; border: 1px solid #b8d5ae; }
+.lh-motion { padding: 14px 7px; background: #f0d3ee; font: 600 20px/1.35 var(--sans); color: var(--ink); }
+.lh-setting { padding: 10px 0; font: 500 20px/1.35 var(--sans); color: var(--ink); }
+.lh-metric-key { transition: background .4s; }
+.lh-metric-key { padding: 8px 0; border-top: 2px solid var(--rule); font: 400 16px/1.35 var(--sans); }
+.lh-metric-key b { display: block; margin-bottom: 4px; font-size: 19px; color: var(--ink); }
+.lh-number { font: 650 48px/1.1 var(--sans); color: var(--ink); }
+.lh-todo { font: 500 14px/1.35 var(--sans); }
+
+/* Compact LatentHOI task, factorization and original-table view. */
+.lh-example-caption { font: 500 18px/1.3 var(--sans); color: var(--ink); }
+.lh-probability { display: flex; align-items: center; justify-content: center; gap: 10px; font: 400 27px/1.3 var(--sans); color: var(--ink); }
+.lh-prob-p { font: italic 400 39px/1 KaTeX_Math, "Times New Roman", serif; }
+.lh-prob-bar { margin: 0 7px; color: var(--muted); }
+.lh-challenge-phrase { font: 500 24px/1.35 var(--sans); color: var(--ink); }
+.lh-factor-symbol { font: 400 56px/1.3 var(--sans); color: var(--muted); }
+.lh-original-metric-key { padding: 5px 0; font-size: 16px; line-height: 1.3; color: var(--text); }
+.lh-original-metric-key b { font-size: 18px; margin-bottom: 2px; }
+.lh-diversity-key { font-size: 15px; color: var(--muted); }
+
+/* ---------- results: the claimed column is framed (.hl overlay) and one line states the numbers ---------- */
+.lh-result-line { font: 600 21px/1.35 var(--sans); color: var(--ink); }
+.lh-result-line b { color: var(--teal); }
+.lh-metric-key.key-hi { border-top-color: var(--teal); }
+.lh-metric-key.key-hi b { color: var(--teal); }
+
+/* ---------- project conclusion: takeaway (claim), one visual example, the evidence ---------- */
+.concl-pts { margin: 0; padding: 0; list-style: none; }
+.concl-pts li { position: relative; padding-left: 24px; margin: 0 0 26px; font: 500 21px/1.38 var(--sans); color: var(--ink); }
+.concl-pts li.lim { color: var(--text); font-weight: 400; }
+.concl-pts li.lim::before { background: var(--terra); }
+.concl-pts li.lim .lim-lab { display: block; margin-bottom: 3px; font: 650 14px/1.2 var(--sans); letter-spacing: .1em; text-transform: uppercase; color: var(--terra); }
+.concl-pts li::before { content: ""; position: absolute; left: 3px; top: 11px; width: 8px; height: 8px; border-radius: 50%; background: var(--teal); }
+.concl-lab { text-align: center; font: 600 18px/1.3 var(--sans); color: var(--ink); }
+.concl-op { text-align: center; font: 300 48px/1 var(--sans); color: var(--faint); }
+
+/* ---------- ending: synthesis table, future directions, acknowledgements, thank you ---------- */
+.syn-row { left: 72px; width: 1136px; display: grid; grid-template-columns: 172px 252px 344px 1fr; column-gap: 22px;
+  align-items: start; padding: 16px 0 0; border-top: 1px solid var(--rule); }
+.syn-row.syn-head { padding: 0 0 8px; border-top: none; }
+.syn-name { display: flex; align-items: center; gap: 12px; font: 650 21px/1.2 var(--sans); color: var(--ink); }
+.syn-name .badge { margin-top: 0; }
+.syn-st { font: 400 18px/1.4 var(--sans); color: var(--text); }
+.syn-where { font: 400 18px/1.4 var(--sans); color: var(--ink); }
+.syn-where b { font-weight: 650; color: var(--teal); }
+.syn-ev { font: 400 17px/1.4 var(--sans); color: var(--muted); }
+.syn-legend { display: flex; align-items: center; gap: 10px; font: 400 17px/1.3 var(--sans); color: var(--muted); }
+.syn-legend .badge { width: 26px; height: 26px; font-size: 13px; line-height: 26px; margin-top: 0; }
+.fut-t { font: 650 22px/1.25 var(--sans); color: var(--ink); }
+.fut-d { font: 400 18px/1.45 var(--sans); color: var(--text); }
+.ack-t { font: 400 19px/1.5 var(--sans); color: var(--ink); }
+.thx { font: 650 66px/1.05 var(--sans); letter-spacing: -.02em; color: var(--ink); }
+.thx-q { margin-top: 18px !important; font: 400 30px/1.2 var(--sans); color: var(--muted); }
+
+/* Closing photo collage. Ceiling crops preserve the full photo width and all people.
+   Greyscale corresponds to PowerPoint's picture colour treatment for Mob. */
+#thanks .thanks-photo { object-fit: contain; object-position: center; margin: 0; }
+#thanks .thanks-photo.ceiling-crop { object-fit: cover; object-position: center bottom; }
+#thanks .thanks-photo.memorial { filter: grayscale(1); }
+#thanks .thanks-message { display: flex; align-items: baseline; justify-content: center; gap: 22px; }
+#thanks .thx { font-size: 34px; }
+#thanks .thx-q { margin-top: 0 !important; font-size: 21px; }
+#thanks .thanks-pet-name { text-align: center; font: 500 16px/1 var(--sans); color: var(--muted); }
+
+/* ---------- clean view (?clean in the URL): the deck's equivalent of the thesis's CLEANVERSION build.
+   Drafted text (.ai) renders in the normal colour and red to-dos are hidden; the default view keeps both. ---------- */
+.clean-view .ai { color: inherit; }
+/* the red notes for the author: off for the defence (author, 2026-10-09); to show them again, scope this back to .clean-view */
+.uncertain, .todo, .lh-todo { display: none !important; }
+
+/* thesis conclusions on the two "what we care about" slides */
+.thesis-concl { padding: 14px 22px 16px; border-left: 4px solid var(--teal); background: var(--teal-t); border-radius: 0 12px 12px 0; }
+.thesis-concl .caps { color: var(--teal); margin-bottom: 6px; }
+.thesis-concl .tc-t { font: 600 24px/1.35 var(--sans); color: var(--ink); }
+
+/* ---------- the spectrum, explicit → implicit (roadmap, chapter openers, conclusion; storyline of 2026-10-06) ---------- */
+.thesis-concl.terra { border-left-color: var(--terra); background: var(--terra-t); }
+.thesis-concl.terra .caps { color: var(--terra); }
+.spec-th .caps { margin-bottom: 6px; }
+.spec-th .st { font: 500 19px/1.35 var(--sans); color: var(--ink); }
+.spec-th.off { opacity: .32; }
+.spec-end { font: 650 14px/1 var(--sans); letter-spacing: .1em; text-transform: uppercase; }
+.spec-end.teal { color: var(--teal); }
+.spec-end.terra { color: var(--terra); text-align: right; }
+.spec-split { border-left: 2px dashed var(--rule); }
+.rdot.terra.cur, .rdot.cur { background: var(--ink); border-color: var(--ink); }
+.rlab .vn { margin-top: 6px; font: 500 13.5px/1.3 var(--sans); color: var(--faint); }
+.rlab .res { margin-top: 6px; font: 400 16.5px/1.35 var(--sans); color: var(--text); }
+.spec-close { font: 600 22px/1.4 var(--sans); color: var(--ink); text-align: center; }
+.mini-spec { display: flex; align-items: center; gap: 20px; }
+.mini-spec .bar { position: relative; flex: 1; height: 6px; border-radius: 3px; background: linear-gradient(90deg, var(--teal), var(--terra)); }
+.mini-spec .bar i { position: absolute; top: -6px; width: 18px; height: 18px; border-radius: 50%; background: var(--ink); outline: 5px solid rgba(20, 33, 61, .12); }
+
+/* MoME lookup comparison, typeset as HTML (replaces mome_wo.png / mome_w.png) */
+.mm-head { text-align: center; font: 650 20px/1.2 var(--sans); color: var(--ink); }
+.mm-chip { display: inline-block; padding: 3px 12px; border-radius: 7px; font: italic 500 17px/1.3 var(--sans); color: var(--ink); background: #fbe0b8; }
+.mm-sent { font: 400 20px/1.35 var(--sans); color: var(--text); }
+.mm-sent .tok { font-weight: 600; padding: 0 3px; border-radius: 4px; background: #f6ef9f; color: var(--ink); }
+/* memory-lookup slide (2026-10-08): the context words of each sentence, tinted on the click, and their lines to "bug" */
+.mm-sent .cw { border-radius: 4px; padding: 0 2px; margin: 0 -2px; transition: background-color .4s ease; }
+.mm-sent .cw.cb.visible { background: var(--terra-t); }
+.mm-sent .cw.ca.visible { background: var(--teal-t); }
+.mm-sent .ctx-arcs { position: absolute; left: 0; top: 0; }
+.mm-key { text-align: center; font-size: 25px; color: var(--ink); }
+.mm-ours { background: #f6ef9f; border-radius: 20px; }
+.mm-same { text-align: center; font: 500 17px/1.3 var(--sans); color: var(--terra); }
+
+/* dimmed table rows: the eye goes to the rows being compared */
+.tdim { background: rgba(255, 255, 255, .74); pointer-events: none; }
+
+/* acknowledgements with photos */
+.ava { position: absolute; border-radius: 50%; object-fit: cover; background: var(--panel); border: 1px solid var(--rule); }
+.ava-init { position: absolute; box-sizing: border-box; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  background: var(--panel-2); border: 1px solid var(--rule); color: var(--muted); font: 600 22px/1 var(--sans); }
+.ava-name { text-align: center; font: 500 14.5px/1.3 var(--sans); color: var(--ink); }
+.ava-name.lg { font-size: 17px; }
+.ack-grp { text-align: center; font: 650 13px/1.2 var(--sans); letter-spacing: .08em; text-transform: uppercase; padding-bottom: 6px; }
+.ack-grp.teal { color: var(--teal); border-bottom: 2px solid var(--teal-t); }
+.ack-grp.terra { color: var(--terra); border-bottom: 2px solid var(--terra-t); }
+
+/* future work */
+.fut-k { margin-top: 16px !important; font: 650 13px/1.2 var(--sans); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.fut-k + .fut-d { margin-top: 4px !important; }
+.ava-name.sm { font-size: 12.5px; line-height: 1.25; }
+.ack-role { margin-right: 8px; font: 650 12.5px/1 var(--sans); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.ack-fund { font: 400 14.5px/1.5 var(--sans); color: var(--ink); }
+.exam-row { display: grid; grid-template-columns: 188px 1fr; align-items: baseline; margin-bottom: 9px; }
+.exam-name { font: 500 17.5px/1.3 var(--sans); color: var(--ink); }
+.exam-aff { margin-left: 8px; font: 400 14px/1.3 var(--sans); color: var(--muted); }
+.exam-row .ack-role { white-space: nowrap; }
+
+/* explicit-structure example on the intro slide: an AoPS solution as a chain of reasoning steps */
+.mstep { position: absolute; box-sizing: border-box; height: 30px; display: block; line-height: 27px; padding: 0 12px;
+  font: 400 15px/1 var(--sans); color: var(--ink); background: #fff; border: 1.5px solid #aab3be; border-radius: 8px; white-space: nowrap; }
+.mstep .katex { font-size: 1.05em; }
+.mstep.ans { background: var(--teal-t); border: 1.6px dashed var(--teal); color: var(--teal); font-weight: 600; }
+
+/* implicit-structure slide: each example reads "what depends on what → how it shapes the model" */
+.dep-t { font: 500 17px/1.35 var(--sans); color: var(--ink); }
+.model-t { font: 600 16.5px/1.35 var(--sans); color: var(--terra); }
+.ctx .cw { text-decoration: underline dotted 2px; text-underline-offset: 5px; }
+.ctx .cw.a { text-decoration-color: var(--teal); }
+.ctx .cw.b { text-decoration-color: var(--terra); }
+
+/* implicit slide v3: motion = global + grasp; language as tokens inside an LLM */
+.eqsym { font: 300 44px/1 var(--sans); color: var(--faint); text-align: center; }
+.side-cap { font: 500 15px/1.3 var(--sans); color: var(--muted); }
+.llm-box { position: absolute; box-sizing: border-box; border: 1.5px solid var(--rule); border-radius: 14px; background: var(--panel); }
+.llm-bar { position: absolute; box-sizing: border-box; height: 36px; border-radius: 13px 13px 0 0; background: var(--ink);
+  color: #fff; font: 650 15px/36px var(--sans); letter-spacing: .14em; text-align: center; }
+.tokrow { position: absolute; display: flex; align-items: center; gap: 4px; white-space: nowrap; }
+.tokc { display: inline-block; padding: 6px 6px; border: 1.4px solid #c9d0d8; border-radius: 7px; background: #fff;
+  font: 500 14.5px/1 var(--sans); color: var(--ink); }
+.tokc.ca { border-color: var(--teal-2); background: var(--teal-t); }
+.tokc.cb { border-color: var(--terra-2); background: var(--terra-t); }
+.tokc.ha { border-color: var(--teal); background: var(--teal); color: #fff; font-weight: 700; }
+.tokc.hb { border-color: var(--terra); background: var(--terra); color: #fff; font-weight: 700; }
+.tokc.gap { border: none; background: none; padding: 6px 1px; color: var(--faint); }
+.mean { margin-left: 4px; font: 500 14.5px/1 var(--sans); color: var(--muted); }
+
+/* publications: first or co-first author papers highlighted */
+.publist li.hi { margin: 0 0 5px; padding: 4px 10px 5px; background: var(--teal-t); border-left: 3px solid var(--teal); border-radius: 0 8px 8px 0; }
+.publist li.hi .pt { color: var(--ink); }
+.publist li:not(.hi) .pt { color: var(--text); font-weight: 500; }
+.publist .pbody { flex: 1; min-width: 0; }
+.publist .plogo { flex: none; align-self: center; width: 58px; height: 22px; object-fit: contain; }
+.publist .pbadge { flex: none; align-self: center; width: 54px; padding: 4px 0; text-align: center; font: 700 11px/1 var(--sans);
+  letter-spacing: .04em; color: var(--muted); border: 1px solid var(--rule); border-radius: 5px; background: #fff; }
+.refs .pkey { display: inline-block; width: 14px; height: 10px; margin-right: 4px; vertical-align: -1px; background: var(--teal-t); border-left: 3px solid var(--teal); }
+.publist li { margin: 0 0 5px; padding: 4px 10px 5px; border-left: 3px solid transparent; border-radius: 0 8px 8px 0; }
+.publist .plogo { width: 66px; height: 26px; }
+
+/* ---------- after rehearsal 2 (2026-10-06) ---------- */
+/* thrust tag on each project's conclusion: its place on the spectrum, and the thrust */
+.mini-spec.sm { gap: 12px; }
+.mini-spec.sm .spec-end { font-size: 11px; }
+.mini-spec.sm .bar { height: 5px; }
+.mini-spec.sm .bar i { width: 14px; height: 14px; top: -5px; outline-width: 4px; }
+.th-tag { font: 600 13px/1.3 var(--sans); letter-spacing: .02em; text-align: right; }
+.th-tag.teal { color: var(--teal); }
+.th-tag.terra { color: var(--terra); }
+/* LatentHOI idea: the per-frame grasp codes Z under both parts, and the link between them */
+.lh-codes.zs { gap: 5px; height: 16px; }
+.lh-codes.zs .lh-code { width: 16px; height: 16px; }
+.lh-zlink path { fill: none; stroke: var(--teal); stroke-width: 2; stroke-dasharray: 5 4; }
+.lh-zlink path.hd { stroke-dasharray: none; }
+.lh-zlab { font-size: 22px; color: var(--teal); }
+/* implicit-structure slide: lines from the context words to the token they disambiguate (drawn by deck.js) */
+svg.ctx-links { position: absolute; left: 0; top: 0; overflow: visible; pointer-events: none; }
+svg.ctx-links path { fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+/* chapter openers (author, 2026-10-07): one centred message — the thrust, then the project's claim — and the spectrum
+   small along the bottom (names only) */
+.op-center { text-align: center; }
+.op-center .caps { letter-spacing: .14em; }
+.op-center .caps.teal, .op-th.teal { color: var(--teal); }
+.op-center .caps.terra, .op-th.terra { color: var(--terra); }
+.op-th { margin-top: 8px; font: 600 22px/1.3 var(--sans); }
+.op-claim { margin-top: 34px; font: 600 40px/1.28 var(--sans); letter-spacing: -.012em; color: var(--ink); text-wrap: balance; }
+.spec-end.sm { font-size: 12px; }
+.rlab.sm .nm { font: 600 15px/1.25 var(--sans); }
+/* GraphPNAS graph slide: the paper's Graphviz look, and the arrays printed as on CRV slide 6 */
+.fig text.gv-t { font: 400 16px "Times New Roman", Times, serif; fill: #000; }
+.gv-arr { margin: 0; font: 500 20px/1.45 Menlo, "SF Mono", Consolas, "Courier New", monospace; color: var(--ink); white-space: pre; }
+.gv-arr.big { font-size: 24px; }
+.loop-lab { font: 600 19px/1.2 var(--sans); color: var(--ink); text-align: center; }
+/* GraphPNAS qualitative results: the circles draw themselves when their build is shown; accuracy under each network */
+.draw-on ellipse { stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 1.2s var(--ease) .1s; }
+.fragment.visible.draw-on ellipse { stroke-dashoffset: 0; }
+.net-acc { font: 500 14px/1.2 var(--sans); color: var(--muted); text-align: center; }
+/* slide 3 (author, 2026-10-07): the application large, the data type a small label above it */
+.appcol2 { text-align: center; }
+.appcol2 .atype { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+.appcol2 .atype p { font: 600 16px/1.2 var(--sans); color: var(--muted); }
+.appimg.big { height: 236px; margin-top: 14px; }
+.appimg.big.logos img { width: 96px; height: 96px; }
+.appcol2 .app2 { margin-top: 12px; font: 600 19px/1.25 var(--sans); color: var(--teal); }
+/* the structure figures, placed and scaled from their top-left corner; meanings beside the aligned "bug" tokens */
+.figbox { transform-origin: 0 0; }
+.tok-mean { font: 600 15px/1.2 var(--sans); }
+.tok-mean.hb { color: var(--terra); }
+.tok-mean.ha { color: var(--teal); }
+/* chapter openers: the sentence on the left, the structure figure beside it */
+.op-text { text-align: left; }
+.op-text .op-claim { margin-top: 26px; font-size: 34px; text-wrap: pretty; }
+/* builds that hold part of a figure back until the narration reaches it */
+.veil { background: rgba(244, 244, 253, .9); }
+.veil-w { background: #fff; }
+/* LatentHOI: the latent Z that links global motion and grasp; schematic metric pictures (author, 2026-10-07) */
+.lh-heading.sm { font-size: 22px; }
+.lh-zname { color: var(--teal); }
+.lh-zconn path { fill: none; stroke: var(--teal); stroke-width: 3; stroke-linecap: round; }
+.lh-zconn circle, .lh-zconn path.hd { fill: var(--teal); stroke: none; }
+.metric-pic { text-align: center; padding-top: 10px; }
+.metric-pic b { margin-bottom: 2px; }
+.metric-pic p { font-size: 15.5px; }
+.big-num { font: 700 42px/1 var(--sans); text-align: center; letter-spacing: -.01em; }
+/* future-work sketches: within a build the curve draws itself, then the second point and the boundary appear */
+.fragment .draw-mask { stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 1.1s var(--ease) .25s; }
+.fragment.visible .draw-mask { stroke-dashoffset: 0; }
+.fragment .stag { opacity: 0; transition: opacity .5s ease var(--dl, 0s); }
+.fragment.visible .stag { opacity: 1; }
+.concl-tag { font: 600 16px/1.3 var(--sans); color: var(--ink); }
+
+/* ---------- the problem slide after each chapter opener (rehearsal 3, 2026-10-08) ---------- */
+.prob-head { text-align: center; }
+.prob-head.teal { color: var(--teal); }
+.prob-line { text-align: center; font: 500 19px/1.4 var(--sans); color: var(--ink); }
+.prob-chip { text-align: center; padding: 8px 0; border: 1.5px solid #aab3be; border-radius: 9px; background: #fff;
+  font: 600 18px/1.3 var(--sans); color: var(--ink); }
+.prob-chip.sm { padding: 7px 0; font-size: 15px; }
+.prob-bar-lab { font: 500 15px/1.3 var(--sans); color: var(--muted); }
+.prob-bar-num { font: 650 15px/1.3 var(--sans); }
+.big-num .sup { font-size: .5em; position: relative; top: -.85em; margin-left: .04em; }
+.mm-same.teal { color: var(--teal); }
+
+/* ---------- rehearsal 4 (2026-10-08): "ours > baseline" conclusions, memory-table labels, the setting box ---------- */
+.big-gt { font: 300 64px/1 var(--sans); color: var(--ink); text-align: center; }
+.mm-idx { font-size: 19px; line-height: 26px; color: var(--ink); }
+.setting-box { padding: 8px 10px; border-left: 3px solid var(--teal); background: #f6f8fa; font: 400 13px/1.45 var(--sans); color: var(--muted); }
+.setting-box .caps { font-size: 12px; color: var(--teal); margin-bottom: 2px; }
+.setting-box sup { font-size: .72em; vertical-align: .45em; line-height: 0; }
+.gen-box { display: flex; align-items: center; justify-content: center; border: 2px solid var(--teal); border-radius: 10px; background: #e4f1f3; font: 650 15px/1.2 var(--sans); color: var(--teal); }
+.gv-node { display: flex; align-items: center; justify-content: center; text-align: center; border-radius: 50%;
+  background: #add8e6; font-family: "Times New Roman", Times, serif; line-height: 1.1; color: #000; }
+b.hot { color: var(--hl); font-weight: 750; }
+.op-thrust { text-align: right; }
+.op-thrust .caps { margin-bottom: 4px; }
+.op-th.sm { margin-top: 0; font-size: 18px; }
+.fw-q2 { font: 500 23px/1.3 var(--sans); color: var(--terra); }
+/* chapter openers (2026-10-08): the short name with the venue's logo and the year; the paper and its authors as a note */
+.op-head { display: flex; align-items: center; gap: 16px; white-space: nowrap; }
+.op-abbr { font: 650 34px/1.15 var(--sans); letter-spacing: -.012em; color: var(--teal); }
+.op-head img { height: 40px; width: auto; }
+.op-head img[src$="NeurIPS-logo.svg"] { height: 50px; margin: -5px 0; }   /* thin lettering: a little larger */
+.op-year { font: 600 20px/1 var(--sans); color: var(--muted); margin-left: -4px; }
+.op-note .op-ntitle { font: 600 16px/1.3 var(--sans); color: var(--ink); }
+.op-note .op-auth { margin-top: 2px; font: 400 15px/1.3 var(--sans); color: var(--muted); }
+.op-note .op-auth b { font-weight: 650; color: var(--ink); }
+/* MoME problem slide (2026-10-08): the two sides of the picture, an LLM vs. an LLM with a learned embedding table */
+.mm-diff { text-align: center; font: 650 16px/1.25 var(--sans); color: var(--ink); }
+.mm-diff.sub { font: 500 14px/1.3 var(--sans); color: var(--teal); }
