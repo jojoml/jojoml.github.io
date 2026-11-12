@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator><link href="https://jojoml.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://jojoml.github.io/" rel="alternate" type="text/html" hreflang="en" /><updated>2026-11-11T22:34:01-07:00</updated><id>https://jojoml.github.io/feed.xml</id><title type="html">Home</title><subtitle>Personal site and research updates.</subtitle><author><name>jojo</name></author><entry><title type="html">The Missing R in RSI</title><link href="https://jojoml.github.io/blog/2026/the-missing-r-in-rsi/" rel="alternate" type="text/html" title="The Missing R in RSI" /><published>2026-11-01T00:00:00-07:00</published><updated>2026-11-01T00:00:00-07:00</updated><id>https://jojoml.github.io/blog/2026/the-missing-r-in-rsi</id><content type="html" xml:base="https://jojoml.github.io/blog/2026/the-missing-r-in-rsi/"><![CDATA[<style>
+.lede { margin: 0.5em 0 2em; padding: 0.1em 0 0.1em 1.1em; border-left: 3px solid #2563eb; font-size: 1.12em; line-height: 1.6; color: #1f2937; }
+.lede p { margin: 0 0 0.8em; }
+.lede p:last-child { margin-bottom: 0; }
+.paper-links .btn { margin: 0 0.4em 0.4em 0; }
+.refs { font-size: 0.85em; }
+.refs li:target { background: #dbeafe; }
+.paper-links .btn i { margin-right: 0.3em; }
+/* Side notes: in the right margin on wide screens, an inline card on narrow ones.
+Hovering the marker highlights its note; following a link to it flashes it. */
+.sn-ref > a { text-decoration: none; font-weight: 700; color: #2563eb; padding: 0 0.15em; border-radius: 3px; }
+.sn-ref > a:hover, .sn-ref > a:focus { background: #dbeafe; }
+.sidenote { display: block; margin: 0.8em 0 1em; padding: 0.7em 1em; background: #f5f8ff; border-left: 3px solid #2563eb; border-radius: 0 6px 6px 0; font-size: 0.82em; line-height: 1.5; color: #374151; transition: background 0.2s ease; }
+.sidenote .sn-label { display: block; margin-bottom: 0.25em; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #2563eb; }
+.sn-ref:hover + .sidenote, .sn-ref:focus-within + .sidenote { background: #dbeafe; }
+.sidenote:target { animation: sn-flash 1.8s ease; }
+@keyframes sn-flash { 0%, 30% { background: #dbeafe; } 100% { background: #f5f8ff; } }
+@media (min-width: 80em) {
+.sidenote { float: right; clear: right; width: 11rem; margin: 0.2em -11.5rem 0.8em 0; padding: 0.15em 0 0.15em 0.8em; font-size: 0.78em; background: transparent; border-left-width: 2px; border-radius: 0; }
+.sn-ref:hover + .sidenote, .sn-ref:focus-within + .sidenote { background: #eef4ff; }
+.sidenote:target { animation: sn-flash-margin 1.8s ease; }
+@keyframes sn-flash-margin { 0%, 30% { background: #dbeafe; } 100% { background: transparent; } }
+}
+</style>
+
+<div class="lede">
+<p><strong>TL;DR:</strong> We've automated the improving, but the improver stays the same. Most of what gets called recursive self-improvement (RSI) today is self-improvement: an agent improves a solution by itself, in a loop, while the model and harness doing the work never change.</p>
+</div>
+
+<p>Everyone is talking about RSI right now. It’s the new hot concept everyone is chasing. Yet another neolab launched to build RSI. Yet another paper does RSI for chips, robots or science.</p>
+
+<p>I get where the hype comes from, and the progress is real. However, I think we’re abusing the word so much, and we haven’t thought thoroughly about what it means. The fact is:</p>
+
+<p><strong>Most of what gets called RSI is just SI</strong>, and we are ignoring an important part of RSI: whether the agent itself improves, and how we would evaluate that.</p>
+
+<!-- ## Two meanings of "self"
+
+Jeff Dean drew this line in his recent conversation with Fei-Fei Li at Stanford [<a href="#ref-1">1</a>]. He said Silicon Valley tends to conflate two things: self-improvement, where a system is handed a measurable goal and tries different approaches until it hits it, and recursive self-improvement, where the system doing the improving also gets better at improving itself.
+
+That made me realize "self" carries two levels of meaning. In self-improvement, the self is who does the improving: the system improves something by itself, but the self is not improving. In recursive self-improvement, the self is also what gets improved. The improvement loops back and updates the self, and that loop back is what "recursive" adds. -->
+
+<h2 id="self-improvement-the-agent-as-a-universal-optimizer">Self-improvement: the agent as a universal optimizer</h2>
+
+<p>Agents are getting more and more capable at long-horizon engineering tasks, so people have started handing them work that used to need a human in the loop, putting the agent where the scientist or engineer used to be. Agents now write faster GPU kernels for training and serving foundation models [<a href="#ref-7">7</a>, <a href="#ref-8">8</a>]. They work on science problems that can be solved by writing code and running simulations [<a href="#ref-9">9</a>], as in the <a href="/blog/2026/nanoproteinlm-agenticls/">NanoProteinLM</a> project. In robotics, they write and rewrite control policies, using a vision-language model’s read of each trial as feedback [<a href="#ref-10">10</a>]. Basically, anything that can be done by writing code, with a quantitative metric to optimize, is fair game.</p>
+
+<p>This shows up most clearly in what people call autoresearch [<a href="#ref-2">2</a>]. You will often see a hill-climbing curve: a quantitative metric scores each solution the agent proposes, and the goal is to climb that metric as fast and as high as possible. These curves appear in the blogs of nearly every company working on RSI [<a href="#ref-8">8</a>, <a href="#ref-11">11</a>, <a href="#ref-12">12</a>].<sup class="sn-ref"><a href="#note-who">1</a></sup><span class="sidenote" id="note-who"><span class="sn-label">Side note 1</span>Who is building “RSI”? <a href="https://www.recursive.com/articles/first-steps-toward-automated-ai-research">Recursive</a> automates the AI research loop [<a href="#ref-8">8</a>]. <a href="https://www.primeintellect.ai/blog/measuring-autonomous-research">Prime Intellect</a> ran 153 autonomous runs on the nanoGPT speedrun across 18 models to measure research ability [<a href="#ref-11">11</a>]. <a href="https://www.adaptionlabs.ai/blog/autoscientist">Adaption</a> offers AutoScientist, which co-optimizes training data and recipes [<a href="#ref-12">12</a>]. <a href="https://mirendil.com/">Mirendil</a> trains frontier models that are expert at AI R&amp;D [<a href="#ref-4">4</a>]. Ricursive Intelligence wants to close the loop between AI and the chips it runs on [<a href="#ref-13">13</a>]. Jeff Dean’s Discovery Loop runs about 20 automated improvement loops on its own ML work, but has no blog yet [<a href="#ref-1">1</a>, <a href="#ref-3">3</a>].</span></p>
+
+<figure>
+<img src="/assets/img/rsi/prime-intellect-nanogpt-frontier.png" alt="Hill-climbing curves from Prime Intellect's nanoGPT speedrun experiment: the share of the human record gap closed over up to nine days of agent time, one stepped line per frontier model. Fable 5 reaches about 82%; most models stay below 40%." width="100%" />
+<figcaption>Hill-climbing curves from Prime Intellect's nanoGPT speedrun experiment [<a href="#ref-11">11</a>]: the share of the gap to the human record that each model closed over up to nine days of autonomous work. Figure from Prime Intellect; see their <a href="https://www.primeintellect.ai/research/nanogpt-speedrun">interactive version</a>.</figcaption>
+</figure>
+
+<p>You see, people have been following the agent-as-optimizer path to build optimization loops for everything, which is truly amazing. Those hill-climbing curves rise fast and high [<a href="#ref-11">11</a>]. So, is that RSI already?</p>
+
+<h2 id="defining-recursive-self-improvement">Defining recursive self-improvement</h2>
+<p>One thing that’s easily overlooked is the meta layer that “recursive” adds to RSI. Self-improvement refers to a system that closes a loop and improves something by itself.<sup class="sn-ref"><a href="#note-dean">2</a></sup><span class="sidenote" id="note-dean"><span class="sn-label">Side note 2</span>Jeff Dean drew this same line in a recent conversation with Fei-Fei Li: in self-improvement, a system is handed a measurable goal and tries approaches until it hits it, while in recursive self-improvement, the system doing the improving also gets better at improving itself [<a href="#ref-1">1</a>].</span> But does the agent improve its own understanding of the task, or learn new skills or insights? Or is it just another diligent, super brilliant graduate student who tries out every research idea but never stops to develop insights?</p>
+
+<p>That’s the meta level of improvement that “recursive” stands for: whoever completes the loop, the agent or the system, is also improving itself at the same time.</p>
+
+<figure>
+<img src="/assets/img/rsi/si-vs-rsi.svg" alt="Two loop diagrams. Self-improvement: the agent proposes a change, a metric scores the solution, and only the solution gets better while the same model and harness are used every round. Recursive self-improvement: the same loop, plus an arrow that updates the agent itself, so both the solution and the agent get better." width="100%" />
+<figcaption>Self-improvement versus recursive self-improvement. In both, the agent proposes changes and a metric scores them, so the solution gets better every round. In RSI, the loop also updates the agent itself: its model or harness.</figcaption>
+</figure>
+
+<p>Well, think about how a good researcher or engineer would approach a problem. They don’t just keep their head down and try every solution they could ever think of. They learn from trial and error, and they gain insights as they explore. Eventually, they get better at solving that problem, or even that family of problems. This part of capability gets far too little attention.</p>
+
+<p>So in RSI, solving a problem and autonomously improving its solution is not enough. What also matters is the ability to keep learning from the problem and improve one’s own capability to solve it.</p>
+
+<h2 id="what-is-the-self-in-recursive-self-improvement">What is the “self” in recursive self-improvement?</h2>
+
+<p>A modern agentic system consists of three things: the LLM, the harness and the context. The LLM is the model’s weights. The harness is made up of the skills, workflow and prompts around the LLM. Together, they make up the “self” of an agent.</p>
+
+<figure>
+<img src="/assets/img/rsi/three-layers.svg" alt="Three boxes: the LLM and the harness grouped as the self, and the context as knowledge. In today's loops the LLM is never updated, the harness is rarely updated and the context accumulates." width="100%" />
+<figcaption>The three parts of an agentic system. The LLM and the harness form the self; the context is knowledge. In today's loops, only the context changes.</figcaption>
+</figure>
+
+<p>The agent is then put into a context. The context is all the artifacts the agent can draw on: files in the working directory, agent logs and memory systems. I keep the context out of the self, because accumulating knowledge does not equal improving oneself.</p>
+
+<p>In most “RSI” settings people talk about today, the agent works in a loop to optimize a solution for a certain task. The context gets updated with past failed attempts, logs and notes, but the other two layers, the language model itself and the harness, are usually not updated.<sup class="sn-ref"><a href="#note-partial">3</a></sup><span class="sidenote" id="note-partial"><span class="sn-label">Side note 3</span>A few systems are starting to touch the self. The <a href="https://arxiv.org/abs/2505.22954">Darwin Gödel Machine</a> and <a href="https://arxiv.org/abs/2603.19461">Hyperagents</a> rewrite the agent’s own code while the model stays frozen, and <a href="https://arxiv.org/abs/2506.10943">SEAL</a> lets a model write its own fine-tuning data. None of them closes the loop yet. Memory systems that only accumulate notes stay on the SI side.</span></p>
+
+<h2 id="why-does-this-matter-at-all">Why does this matter at all?</h2>
+
+<p>For those who have been working on autoresearch or RSI, this might sound familiar. You build an environment and an eval metric for your agent to loop on, and the hill-climbing curve is amazing at the beginning. Then, quickly, the curve plateaus, and your agent is cluelessly adjusting parameters or trying trivial fixes.<sup class="sn-ref"><a href="#note-prime">4</a></sup><span class="sidenote" id="note-prime"><span class="sn-label">Side note 4</span>Prime Intellect saw something similar at scale: across 153 autonomous runs on the nanoGPT speedrun, the models mostly rediscovered known ideas, and none produced a fundamentally new method [<a href="#ref-11">11</a>].</span></p>
+
+<!-- TODO figure idea: a human vs. agent hill-climbing curve, where the human curve doesn't plateau the same way. Needs real data, e.g. from the NanoProteinLM search runs. -->
+
+<p>The base model, and the agentic system built on top of it, is now strong enough to look at the history in its context and improve its solution recursively. But keeping the “self” fixed makes continual learning impossible: the system can’t actually learn and get better while it’s solving a particular problem, which is what humans do.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>What we are mostly building today under the name of RSI is SI. That is not to undermine how effective SI is. Engineers and researchers are actively working alongside SI agents that reflect and improve<sup class="sn-ref"><a href="#note-labs">5</a></sup><span class="sidenote" id="note-labs"><span class="sn-label">Side note 5</span>Frontier labs are a middle case. At OpenAI and Anthropic, researchers work with SI agents to build the next generation of the same models. That can count as RSI at another level, where the “self” is the model family [<a href="#ref-5">5</a>, <a href="#ref-6">6</a>]. But the process is not automatic, and it still takes a lot of human effort.</span>, though the insights still mostly come from human experts. It’s impressive performance all the same.</p>
+
+<p>So the goal of this post is not to undermine anyone’s efforts to build self-improvement. It’s a rethinking of RSI itself. There is so much hype about how much SI can achieve that we’re ignoring the part that makes it recursive: the continual learning capability of the model itself. In the next post, I’ll look at how we could actually evaluate that.</p>
+
+<h2 id="references">References</h2>
+
+<ol class="refs">
+<li id="ref-1">OfficeChai. <a href="https://officechai.com/ai/implausible-that-self-improvement-loops-will-run-infinitely-fast-jeff-dean/">"Implausible" that self-improvement loops will run infinitely fast: Jeff Dean</a>. November 2026. Report on Jeff Dean in conversation with Fei-Fei Li, Stanford, October 28, 2026 (<a href="https://www.youtube.com/watch?v=ooGKNwJWdb8">video</a>).</li>
+<li id="ref-2">Andrej Karpathy. <a href="https://github.com/karpathy/autoresearch">autoresearch</a>. March 2026.</li>
+<li id="ref-3"><a href="https://www.discoveryloop.com/">Discovery Loop</a>.</li>
+<li id="ref-4"><a href="https://mirendil.com/">Mirendil</a>.</li>
+<li id="ref-5">Anthropic. <a href="https://www.anthropic.com/institute/recursive-self-improvement">When AI builds itself</a>. June 2026.</li>
+<li id="ref-6">OpenAI. <a href="https://openai.com/index/introducing-gpt-5-3-codex/">Introducing GPT-5.3-Codex</a>. February 2026.</li>
+<li id="ref-7">Google DeepMind. <a href="https://deepmind.google/blog/alphaevolve-a-gemini-powered-coding-agent-for-designing-advanced-algorithms/">AlphaEvolve: A Gemini-powered coding agent for designing advanced algorithms</a>. May 2025.</li>
+<li id="ref-8">Recursive Superintelligence, Inc. <a href="https://www.recursive.com/articles/first-steps-toward-automated-ai-research">First steps toward automated AI research</a>. June 2026.</li>
+<li id="ref-9">Anthropic. <a href="https://www.anthropic.com/research/claude-uplifts-biomolecular-modeling">How Claude is uplifting biomolecular modeling</a>. September 2026.</li>
+<li id="ref-10">Vaishak Kumar. <a href="https://arxiv.org/abs/2603.04466">Act–Observe–Rewrite: Multimodal coding agents as in-context policy learners for robot manipulation</a>. March 2026.</li>
+<li id="ref-11">Elie Bakouch and Prime Intellect. <a href="https://www.primeintellect.ai/blog/measuring-autonomous-research">Measuring autonomous AI research</a>. August 2026.</li>
+<li id="ref-12">Adaption. <a href="https://www.adaptionlabs.ai/blog/autoscientist">AutoScientist: Automating the science of model training</a>. May 2026.</li>
+<li id="ref-13">Sequoia Capital, Training Data podcast. <a href="https://sequoiacap.com/podcast/how-ricursive-intelligences-founders-are-using-ai-to-shape-the-future-of-chip-design">How Ricursive Intelligence's founders are using AI to shape the future of chip design</a>.</li>
+</ol>]]></content><author><name>Muchen Li</name><email>muchenli@cs.ubc.ca</email></author><summary type="html"><![CDATA[Most of what gets called recursive self-improvement today is self-improvement. The part where the improver itself gets better is still missing.]]></summary></entry><entry><title type="html">Hill-Climbing a Protein Language Model: A Taste of Autoresearch for Scientific Discovery</title><link href="https://jojoml.github.io/blog/2026/nanoproteinlm-agenticls/" rel="alternate" type="text/html" title="Hill-Climbing a Protein Language Model: A Taste of Autoresearch for Scientific Discovery" /><published>2026-09-30T00:00:00-07:00</published><updated>2026-09-30T00:00:00-07:00</updated><id>https://jojoml.github.io/blog/2026/nanoproteinlm-agenticls</id><content type="html" xml:base="https://jojoml.github.io/blog/2026/nanoproteinlm-agenticls/"><![CDATA[<style>
+.lede { margin: 0.5em 0 2em; padding: 0.1em 0 0.1em 1.1em; border-left: 3px solid #2563eb; font-size: 1.12em; line-height: 1.6; color: #1f2937; }
+.lede p { margin: 0 0 0.8em; }
+.lede p:last-child { margin-bottom: 0; }
+.paper-links .btn { margin: 0 0.4em 0.4em 0; }
+.refs { font-size: 0.85em; }
+.refs li:target { background: #dbeafe; }
+.paper-links .btn i { margin-right: 0.3em; }
+/* Side notes: in the right margin on wide screens, an inline card on narrow ones.
+   Hovering the marker highlights its note; following a link to it flashes it. */
+.sn-ref > a { text-decoration: none; font-weight: 700; color: #2563eb; padding: 0 0.15em; border-radius: 3px; }
+.sn-ref > a:hover, .sn-ref > a:focus { background: #dbeafe; }
+.sidenote { display: block; margin: 0.8em 0 1em; padding: 0.7em 1em; background: #f5f8ff; border-left: 3px solid #2563eb; border-radius: 0 6px 6px 0; font-size: 0.82em; line-height: 1.5; color: #374151; transition: background 0.2s ease; }
+.sidenote .sn-label { display: block; margin-bottom: 0.25em; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #2563eb; }
+.sn-ref:hover + .sidenote, .sn-ref:focus-within + .sidenote { background: #dbeafe; }
+.sidenote:target { animation: sn-flash 1.8s ease; }
+@keyframes sn-flash { 0%, 30% { background: #dbeafe; } 100% { background: #f5f8ff; } }
+@media (min-width: 80em) {
+  .sidenote { float: right; clear: right; width: 11rem; margin: 0.2em -11.5rem 0.8em 0; padding: 0.15em 0 0.15em 0.8em; font-size: 0.78em; background: transparent; border-left-width: 2px; border-radius: 0; }
+  .sn-ref:hover + .sidenote, .sn-ref:focus-within + .sidenote { background: #eef4ff; }
+  .sidenote:target { animation: sn-flash-margin 1.8s ease; }
+  @keyframes sn-flash-margin { 0%, 30% { background: #dbeafe; } 100% { background: transparent; } }
+}
+</style>
+
+<div class="lede">
+<p>Recursive self-improvement (RSI) has recently shown great promise for scientific discovery: agentic hill-climbing has sped up biomolecular models [<a href="#ref-1">1</a>], improved LM training and GPU kernels [<a href="#ref-2">2</a>], and maxed out Atari Breakout [<a href="#ref-3">3</a>]. However, RSI does not work out of the box on an arbitrary science problem. We believe the hard part is not the climbing but the hill: choosing the right research question, scoping the search space, and designing evaluations that track real scientific progress. This project offers a first taste of what it takes to build such a hill.</p>
+<p>In the spirit of NanoGPT, we made protein language model research hill-climbable, with an open 666M-protein corpus, a readable trainer, frozen evaluations and an explicit protocol, and we show that a plain sequential search with a human gate already produces a much better training recipe than the ESMC baseline.</p>
+</div>
+
+<h2 id="a-better-plm-recipe-by-hill-climbing-nanoproteinlm">A better PLM recipe by hill-climbing NanoProteinLM</h2>
+
+<p>If a research question can be turned into a loop that an agent runs without waiting on a person, the agent can try far more ideas than a lab could by hand, and each change it keeps becomes the starting point for the next. We wanted to see how far that goes on a real problem, so we tried it on protein language model training.</p>
+
+<figure>
+<img src="/assets/img/nanoproteinlm/matched-scaleup.png" alt="Training loss, contact precision and validation loss of the ESMC baseline and the scaled recipe over 100k training steps" width="100%" />
+<figcaption>The ESMC baseline (blue) and the recipe found with autoresearch (orange), trained on the same 48.4B tokens. Left, training loss. Right, contact precision (solid) and validation loss (dashed).</figcaption>
+</figure>
+
+<p>Starting from the ESMC recipe, a simple sequential search, with a human deciding which recipes to scale up, gave a recipe with about 30% higher long-range contact precision, from 28.2% to 36.6% P@L, at the same 48.4B-token budget.</p>
+
+<p>Behind the scenes, the hard problem did not lie in the design of the autoresearch harness.<sup class="sn-ref"><a href="#note-search">1</a></sup><span class="sidenote" id="note-search"><span class="sn-label">Side note 1</span>We use a very simple Karpathy-style sequential search, which is certainly not the best harness one could build. Our aim is not a better autoresearch algorithm; we want to understand what makes a task hill-climbable.</span> It lay in the environment around the scientific loop: the data, the evaluation, the budget and the rules that let the loop run unattended and still tell us something true about proteins.</p>
+
+<h2 id="building-hill-climbable-environments-for-research-tasks">Building hill-climbable environments for research tasks</h2>
+
+<p>Not every science question is hill-climbable.<sup class="sn-ref"><a href="#note-amdahl">2</a></sup><span class="sidenote" id="note-amdahl"><span class="sn-label">Side note 2</span>One way to see this is something like Amdahl’s law for autoresearch. Split a research round into the time it takes to get a useful scientific signal back, by running the experiment and measuring the result, and the time a researcher spends deciding what to try next. Even an agent as capable as the best human researcher can only shrink the second part, so the speed-up it buys is at most \(1 + T_\text{decide} / T_\text{signal}\). Hill-climbing pays off most when progress is capped by researcher effort, as with compute experiments that finish in an hour while a person needs a day to choose the next one. When the smallest loop that returns a useful signal is itself slow or expensive, such as a week of growing cells, automation buys little and the quality of each decision matters more.</span> For tasks where hill-climbing does pay off, we apply the following general principles to design the environment.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Item</th>
+      <th>What it fixes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Research objective</td>
+      <td>The scientific outcome the campaign should improve, fixed before search.</td>
+    </tr>
+    <tr>
+      <td>Design space</td>
+      <td>What the agent may change and what must stay fixed, with bounds that exclude gains the objective does not value.</td>
+    </tr>
+    <tr>
+      <td>Round budget</td>
+      <td>The resources each candidate may spend, identical for the baseline and every candidate so rewards compare across rounds.</td>
+    </tr>
+    <tr>
+      <td>Round reward</td>
+      <td>A scalar measured on held-out validation data after each round, which the loop compares with the incumbent’s to keep or discard the candidate.</td>
+    </tr>
+    <tr>
+      <td>Validation</td>
+      <td>A larger-budget retraining of the selected recipe against the baseline, testing whether search-time gains carry over.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="failure-mode-perfect-on-reward-failure-on-science">Failure mode: Perfect on reward, failure on science</h2>
+
+<p>Here we show an example of the most typical way reward hacking makes autoresearch go wrong. To see how agents behave in this environment, we let Codex Astra and Claude Opus 5.5 each run 72 rounds of search against validation loss. Both lowered the loss, and after 12 hours of training both recipes still beat our reference on it. Their contact precision (a proxy metric for downstream protein folding), though, shows a large gap to the best setting.</p>
+
+<figure>
+<img src="/assets/img/nanoproteinlm/figure4-table4-agents.png" alt="Retained validation loss of the two agents over 72 rounds, beside a table of search and 12-hour scale-up results" width="100%" />
+<figcaption>Left, retained validation loss over 72 rounds from a shared baseline. Right, search results and a fixed 12-hour scale-up, with each recipe's gap to our reference recipe in colour.</figcaption>
+</figure>
+
+<p>The agent optimizes the reward as written, and any gap between that reward and the scientific goal is open to it. That is also why the evaluation took most of our effort in the previous section. A reward that has not been tested carefully can be hacked in more ways than you can imagine in advance.</p>
+
+<h2 id="what-survived-the-human-gate">What survived the human gate</h2>
+
+<p>Our main campaign ran a Karpathy-style sequential hill-climber, deliberately simple and far from optimal (<a href="#note-search">side note 1</a>), with the following settings:</p>
+
+<ul>
+  <li>Every candidate trains with two seeds and is kept only if its mean gain beats the seed-to-seed spread.</li>
+  <li>P@L is too noisy to steer by at one hour, so we climbed validation loss while watching P@L, then ran a second search on P@L itself.</li>
+  <li>A final scaled-up ablation of the confirmed improvements.</li>
+</ul>
+
+<figure>
+<img src="/assets/img/nanoproteinlm/search-rewards.png" alt="Two sequential searches: validation loss over 38 candidates and contact precision over 35 candidates" width="100%" />
+<figcaption>The two searches, rewarded by validation loss (left) and contact precision (right). Points are two-seed means; blue steps track the retained recipe; numbers mark accepted changes.</figcaption>
+</figure>
+
+<figure>
+<img src="/assets/img/nanoproteinlm/table2-ladder.png" alt="Search-time and 24.2B-token results for each accepted change, with shaded rows for the changes kept" width="100%" />
+<figcaption>Each recipe adds one accepted change to the recipe named before the plus sign. Shaded rows are the changes kept in the final recipe; deltas are against that parent at 24.2B tokens.</figcaption>
+</figure>
+
+<p>Four of the seven changes survive the final ablation study. All four change the optimizer, the loss weighting or how batches are split across GPUs.</p>
+
+<h2 id="takeaway">Takeaway</h2>
+
+<p>NanoProteinLM carries our vision of an open research environment that connects scientists with agentic researchers.</p>
+
+<p><strong>For protein researchers</strong>, we provide a minimal reproduction of ESMC-style model training: public data, readable PyTorch code, training recipes and evaluations in one place. We aim to contribute an open-source foundation that researchers can understand, reproduce and extend in support of open science.</p>
+
+<p><strong>For agentic researchers</strong>, it provides a controlled environment for iterative autoresearch on the same scientific objective. Deterministic data selection, fixed seeds, explicit compute budgets and frozen evaluation protocols make recipe changes measurable. An agent can modify the training recipe, train, evaluate and improve it; the choice of agent and search strategy remains yours.</p>
+
+<h2 id="authors-and-links">Authors and links</h2>
+
+<p>For more details, please refer to our paper, accepted as a spotlight presentation at the AgenticLS workshop (Agentic AI for Biological Discovery) at NeurIPS 2026.</p>
+
+<p class="paper-links">
+<a href="https://www.alphaxiv.org/abs/2609.nanoproteinlm-hill-climbable-protein-models" class="btn btn--primary"><i class="fas fa-file-lines" aria-hidden="true"></i> Paper</a>
+<a href="https://github.com/Lumin-Science/Nano-ProteinLM" class="btn btn--inverse"><i class="fab fa-github" aria-hidden="true"></i> Code</a>
+<a href="https://huggingface.co/datasets/LuminScience/LuminBench-Nano-ESMC" class="btn btn--inverse"><i class="fab fa-hugging-face" aria-hidden="true"></i> Data</a>
+</p>
+
+<p>Muchen Li (University of British Columbia) and Chixiang Lu (The University of Hong Kong)</p>
+
+<div class="language-bibtex highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">@inproceedings</span><span class="p">{</span><span class="nl">nanoproteinlm2026</span><span class="p">,</span>
+  <span class="na">title</span>     <span class="p">=</span> <span class="s">{NanoProteinLM: Towards Hill-Climbable Protein Language Model Research}</span><span class="p">,</span>
+  <span class="na">author</span>    <span class="p">=</span> <span class="s">{Li, Muchen and Lu, Chixiang}</span><span class="p">,</span>
+  <span class="na">booktitle</span> <span class="p">=</span> <span class="s">{NeurIPS 2026 Workshop on Agentic AI for Biological Discovery}</span><span class="p">,</span>
+  <span class="na">year</span>      <span class="p">=</span> <span class="s">{2026}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="references">References</h2>
+
+<ol class="refs">
+<li id="ref-1">Anthropic. <a href="https://www.anthropic.com/research/claude-uplifts-biomolecular-modeling">How Claude is uplifting biomolecular modeling</a>. September 2026.</li>
+<li id="ref-2">Recursive Superintelligence, Inc. <a href="https://www.recursive.com/articles/first-steps-toward-automated-ai-research">First steps toward automated AI research</a>. June 2026.</li>
+<li id="ref-3">Jiayi Weng. <a href="https://trinkle23897.github.io/learning-beyond-gradients/">Learning beyond gradients</a>. May 2026.</li>
+</ol>]]></content><author><name>Muchen Li</name><email>muchenli@cs.ubc.ca</email></author><summary type="html"><![CDATA[Our AgenticLS 2026 workshop paper on turning protein language model training into an environment where agents can do research.]]></summary></entry><entry><title type="html">Thoughts on autoresearch</title><link href="https://jojoml.github.io/blog/2026/thoughts-on-autoresearch/" rel="alternate" type="text/html" title="Thoughts on autoresearch" /><published>2026-03-10T00:00:00-07:00</published><updated>2026-03-10T00:00:00-07:00</updated><id>https://jojoml.github.io/blog/2026/thoughts-on-autoresearch</id><content type="html" xml:base="https://jojoml.github.io/blog/2026/thoughts-on-autoresearch/"><![CDATA[<p>Andrej Karpathy’s <a href="https://github.com/karpathy/autoresearch"><code class="language-plaintext highlighter-rouge">autoresearch</code></a> repo has been getting a lot of attention because it frames research as a simple loop: edit a training file, run a fixed five-minute experiment, and keep the change only if <code class="language-plaintext highlighter-rouge">val_bpb</code> improves. That kind of concrete objective is exactly why agents like Claude Code can do reasonably well here. By March 10, 2026, the GitHub repo page showed about 20k stars, while the commit history goes back only to March 6, 2026.</p>
+
+<p><img src="https://raw.githubusercontent.com/karpathy/autoresearch/master/progress.png" alt="Progress plot from karpathy/autoresearch" /></p>
+
+<p><em>A concrete loop like this is a big part of why the setup feels promising: the agent can try a change, get a verifiable result quickly, and keep iterating.</em></p>
+
+<p>However, I think a lot of the excitement around <code class="language-plaintext highlighter-rouge">autoresearch</code> overstates what is coming from the agent itself. An important part of its success comes from other places as well: having a clear objective, a fast verification loop, and a small setting that still transfers.</p>
+
+<p>At the same time, I think the success of <code class="language-plaintext highlighter-rouge">autoresearch</code> is built on a lot of prior work in turning large and expensive research questions into mini-settings. From <a href="https://github.com/karpathy/nanoGPT"><code class="language-plaintext highlighter-rouge">nanoGPT</code></a> to <a href="https://github.com/karpathy/nanochat"><code class="language-plaintext highlighter-rouge">nanochat</code></a>, Karpathy has spent a lot of effort scaling things down so research can iterate quickly while still maintaining correlation with the larger setting. If you look closely at <code class="language-plaintext highlighter-rouge">nanochat</code>, you can see that scaling matters a lot there, because a finding in a minimal setup is only useful if it transfers.</p>
+
+<p>The <a href="https://github.com/karpathy/nanochat"><code class="language-plaintext highlighter-rouge">nanochat</code> repo</a> makes this very explicit with its small-scale scaling-law experiments, and the <a href="https://github.com/karpathy/nanochat/discussions/420">Jan 7 miniseries discussion</a> gives more context for that direction.</p>
+
+<p><img src="https://raw.githubusercontent.com/karpathy/nanochat/master/dev/scaling_laws_jan26.png" alt="Scaling laws from karpathy/nanochat" />
+Another important part is the work that went into building datasets and evaluations that can support this kind of mini-research while preserving transfer to the larger problem. That part matters at least as much as the agent itself.</p>
+
+<p><strong>To me, the hard part is not just being given a research objective. The hard part is taking an objective that is expensive to verify and translating it into a small setting that is fast to verify and iterate on, without losing too much of the chance that success in the small setting transfers back to the original one.</strong> This requires insights.</p>
+
+<p>This is also where the bottleneck changes. Before you shrink a costly setting into a small one, the bottleneck is the runtime of the experiment. If one experiment takes two days, then after two days a human still has enough time to analyze the result, read the report, and start the next run. In that case, the main bottleneck is not human productivity. It is experiment cost in time.</p>
+
+<p>But if you shrink that loop from two days to two hours or even two minutes, then the bottleneck starts to become human iteration speed. It is hard for a person to come up with a new idea every two minutes, write the code, run it, and keep going. That is where the value of <code class="language-plaintext highlighter-rouge">autoresearch</code> really appears. It reduces the human bottleneck for verifiable tasks that can be iterated quickly, and of course it can keep working while you sleep.</p>
+
+<p>Overall, if you want auto research to work well in your own domain, what matters is that you have a clear objective and, even more importantly, a small-scale setting that your original problem can be transferred into without breaking the signal. If you have that, then research can iterate quickly while you are away, on vacation, or asleep.</p>]]></content><author><name>Muchen Li</name><email>muchenli@cs.ubc.ca</email></author><summary type="html"><![CDATA[Andrej Karpathy’s autoresearch repo has been getting a lot of attention because it frames research as a simple loop: edit a training file, run a fixed five-minute experiment, and keep the change only if val_bpb improves. That kind of concrete objective is exactly why agents like Claude Code can do reasonably well here. By March 10, 2026, the GitHub repo page showed about 20k stars, while the commit history goes back only to March 6, 2026.]]></summary></entry></feed>

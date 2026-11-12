@@ -1,0 +1,646 @@
+
+
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.28.1 by Michael Rose
+  Copyright 2013-2026 Michael Rose - mademistakes.com | @mmistakes
+  Copyright 2024-2026 iBug - ibugone.com | @iBug
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="en" class="no-js" dir="ltr">
+  <head>
+    
+<meta charset="utf-8">
+
+
+<!-- begin _includes/seo.html --><title>The Missing R in RSI - Home</title>
+<meta name="description" content="Most of what gets called recursive self-improvement today is self-improvement. The part where the improver itself gets better is still missing.">
+
+
+  <meta name="author" content="Muchen Li">
+  
+  <meta property="article:author" content="Muchen Li">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Home">
+<meta property="og:title" content="The Missing R in RSI">
+<meta property="og:url" content="https://jojoml.github.io/blog/2026/the-missing-r-in-rsi/">
+
+
+  <meta property="og:description" content="Most of what gets called recursive self-improvement today is self-improvement. The part where the improver itself gets better is still missing.">
+
+
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2026-11-01T00:00:00-07:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://jojoml.github.io/blog/2026/the-missing-r-in-rsi/">
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Home Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <!-- MathJax 3 for LaTeX rendering -->
+<script>
+  window.MathJax = {
+    tex: {
+      inlineMath: [['\\(', '\\)'], ['$', '$']],
+      displayMath: [['\\[', '\\]'], ['$$', '$$']],
+      tags: 'ams'
+    },
+    options: {
+      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  };
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  </head>
+
+  <body class="layout--single">
+    
+<nav class="skip-links" aria-label="Skip links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav" aria-label="Primary navigation">
+        
+        <a class="site-title" href="/">
+          Home
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/about/"
+                
+                
+              >About Me</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/blog/"
+                
+                
+              >Blog</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+
+
+<div id="main" role="main">
+  
+
+  <div class="sidebar sticky">
+  
+
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="https://jojoml.github.io/">
+        <img src="/assets/img/prof_pic.jpg" alt="Muchen Li" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="https://jojoml.github.io/" itemprop="url">Muchen Li</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>PhD student at UBC; machine learning and computer vision.</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-location-dot" aria-hidden="true"></i> <span itemprop="name" class="p-locality">Vancouver, BC</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://github.com/jojo23333" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/muchen-li-376269170" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-linkedin" aria-hidden="true"></i><span class="label">LinkedIn</span></a></li>
+          
+        
+          
+            <li><a href="https://scholar.google.com/citations?user=8P1cUOQAAAAJ" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-google-scholar" aria-hidden="true"></i><span class="label">Google Scholar</span></a></li>
+          
+        
+          
+            <li><a href="https://www.alphaxiv.org/@muchen-li" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fas fa-book-open" aria-hidden="true"></i><span class="label">alphaXiv</span></a></li>
+          
+        
+      
+
+      
+
+      
+        <li>
+          <a href="mailto:muchenli@cs.ubc.ca" rel="me" class="u-email">
+            <meta itemprop="email" content="muchenli@cs.ubc.ca" />
+            <i class="fas fa-fw fa-square-envelope" aria-hidden="true"></i><span class="label">Email</span>
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  
+  </div>
+
+
+
+  <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="The Missing R in RSI">
+    <meta itemprop="description" content="Most of what gets called recursive self-improvement today is self-improvement. The part where the improver itself gets better is still missing.">
+    <meta itemprop="datePublished" content="2026-11-01T00:00:00-07:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title p-name" itemprop="headline">
+            <a href="https://jojoml.github.io/blog/2026/the-missing-r-in-rsi/" itemprop="url">The Missing R in RSI
+</a>
+          </h1>
+          
+
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          7 minute read
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content e-content" itemprop="text">
+        
+        <style>
+.lede { margin: 0.5em 0 2em; padding: 0.1em 0 0.1em 1.1em; border-left: 3px solid #2563eb; font-size: 1.12em; line-height: 1.6; color: #1f2937; }
+.lede p { margin: 0 0 0.8em; }
+.lede p:last-child { margin-bottom: 0; }
+.paper-links .btn { margin: 0 0.4em 0.4em 0; }
+.refs { font-size: 0.85em; }
+.refs li:target { background: #dbeafe; }
+.paper-links .btn i { margin-right: 0.3em; }
+/* Side notes: in the right margin on wide screens, an inline card on narrow ones.
+Hovering the marker highlights its note; following a link to it flashes it. */
+.sn-ref > a { text-decoration: none; font-weight: 700; color: #2563eb; padding: 0 0.15em; border-radius: 3px; }
+.sn-ref > a:hover, .sn-ref > a:focus { background: #dbeafe; }
+.sidenote { display: block; margin: 0.8em 0 1em; padding: 0.7em 1em; background: #f5f8ff; border-left: 3px solid #2563eb; border-radius: 0 6px 6px 0; font-size: 0.82em; line-height: 1.5; color: #374151; transition: background 0.2s ease; }
+.sidenote .sn-label { display: block; margin-bottom: 0.25em; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #2563eb; }
+.sn-ref:hover + .sidenote, .sn-ref:focus-within + .sidenote { background: #dbeafe; }
+.sidenote:target { animation: sn-flash 1.8s ease; }
+@keyframes sn-flash { 0%, 30% { background: #dbeafe; } 100% { background: #f5f8ff; } }
+@media (min-width: 80em) {
+.sidenote { float: right; clear: right; width: 11rem; margin: 0.2em -11.5rem 0.8em 0; padding: 0.15em 0 0.15em 0.8em; font-size: 0.78em; background: transparent; border-left-width: 2px; border-radius: 0; }
+.sn-ref:hover + .sidenote, .sn-ref:focus-within + .sidenote { background: #eef4ff; }
+.sidenote:target { animation: sn-flash-margin 1.8s ease; }
+@keyframes sn-flash-margin { 0%, 30% { background: #dbeafe; } 100% { background: transparent; } }
+}
+</style>
+
+<div class="lede">
+<p><strong>TL;DR:</strong> We've automated the improving, but the improver stays the same. Most of what gets called recursive self-improvement (RSI) today is self-improvement: an agent improves a solution by itself, in a loop, while the model and harness doing the work never change.</p>
+</div>
+
+<p>Everyone is talking about RSI right now. It’s the new hot concept everyone is chasing. Yet another neolab launched to build RSI. Yet another paper does RSI for chips, robots or science.</p>
+
+<p>I get where the hype comes from, and the progress is real. However, I think we’re abusing the word so much, and we haven’t thought thoroughly about what it means. The fact is:</p>
+
+<p><strong>Most of what gets called RSI is just SI</strong>, and we are ignoring an important part of RSI: whether the agent itself improves, and how we would evaluate that.</p>
+
+<!-- ## Two meanings of "self"
+
+Jeff Dean drew this line in his recent conversation with Fei-Fei Li at Stanford [<a href="#ref-1">1</a>]. He said Silicon Valley tends to conflate two things: self-improvement, where a system is handed a measurable goal and tries different approaches until it hits it, and recursive self-improvement, where the system doing the improving also gets better at improving itself.
+
+That made me realize "self" carries two levels of meaning. In self-improvement, the self is who does the improving: the system improves something by itself, but the self is not improving. In recursive self-improvement, the self is also what gets improved. The improvement loops back and updates the self, and that loop back is what "recursive" adds. -->
+
+<h2 id="self-improvement-the-agent-as-a-universal-optimizer">Self-improvement: the agent as a universal optimizer</h2>
+
+<p>Agents are getting more and more capable at long-horizon engineering tasks, so people have started handing them work that used to need a human in the loop, putting the agent where the scientist or engineer used to be. Agents now write faster GPU kernels for training and serving foundation models [<a href="#ref-7">7</a>, <a href="#ref-8">8</a>]. They work on science problems that can be solved by writing code and running simulations [<a href="#ref-9">9</a>], as in the <a href="/blog/2026/nanoproteinlm-agenticls/">NanoProteinLM</a> project. In robotics, they write and rewrite control policies, using a vision-language model’s read of each trial as feedback [<a href="#ref-10">10</a>]. Basically, anything that can be done by writing code, with a quantitative metric to optimize, is fair game.</p>
+
+<p>This shows up most clearly in what people call autoresearch [<a href="#ref-2">2</a>]. You will often see a hill-climbing curve: a quantitative metric scores each solution the agent proposes, and the goal is to climb that metric as fast and as high as possible. These curves appear in the blogs of nearly every company working on RSI [<a href="#ref-8">8</a>, <a href="#ref-11">11</a>, <a href="#ref-12">12</a>].<sup class="sn-ref"><a href="#note-who">1</a></sup><span class="sidenote" id="note-who"><span class="sn-label">Side note 1</span>Who is building “RSI”? <a href="https://www.recursive.com/articles/first-steps-toward-automated-ai-research">Recursive</a> automates the AI research loop [<a href="#ref-8">8</a>]. <a href="https://www.primeintellect.ai/blog/measuring-autonomous-research">Prime Intellect</a> ran 153 autonomous runs on the nanoGPT speedrun across 18 models to measure research ability [<a href="#ref-11">11</a>]. <a href="https://www.adaptionlabs.ai/blog/autoscientist">Adaption</a> offers AutoScientist, which co-optimizes training data and recipes [<a href="#ref-12">12</a>]. <a href="https://mirendil.com/">Mirendil</a> trains frontier models that are expert at AI R&amp;D [<a href="#ref-4">4</a>]. Ricursive Intelligence wants to close the loop between AI and the chips it runs on [<a href="#ref-13">13</a>]. Jeff Dean’s Discovery Loop runs about 20 automated improvement loops on its own ML work, but has no blog yet [<a href="#ref-1">1</a>, <a href="#ref-3">3</a>].</span></p>
+
+<figure>
+<img src="/assets/img/rsi/prime-intellect-nanogpt-frontier.png" alt="Hill-climbing curves from Prime Intellect's nanoGPT speedrun experiment: the share of the human record gap closed over up to nine days of agent time, one stepped line per frontier model. Fable 5 reaches about 82%; most models stay below 40%." width="100%" />
+<figcaption>Hill-climbing curves from Prime Intellect's nanoGPT speedrun experiment [<a href="#ref-11">11</a>]: the share of the gap to the human record that each model closed over up to nine days of autonomous work. Figure from Prime Intellect; see their <a href="https://www.primeintellect.ai/research/nanogpt-speedrun">interactive version</a>.</figcaption>
+</figure>
+
+<p>You see, people have been following the agent-as-optimizer path to build optimization loops for everything, which is truly amazing. Those hill-climbing curves rise fast and high [<a href="#ref-11">11</a>]. So, is that RSI already?</p>
+
+<h2 id="defining-recursive-self-improvement">Defining recursive self-improvement</h2>
+<p>One thing that’s easily overlooked is the meta layer that “recursive” adds to RSI. Self-improvement refers to a system that closes a loop and improves something by itself.<sup class="sn-ref"><a href="#note-dean">2</a></sup><span class="sidenote" id="note-dean"><span class="sn-label">Side note 2</span>Jeff Dean drew this same line in a recent conversation with Fei-Fei Li: in self-improvement, a system is handed a measurable goal and tries approaches until it hits it, while in recursive self-improvement, the system doing the improving also gets better at improving itself [<a href="#ref-1">1</a>].</span> But does the agent improve its own understanding of the task, or learn new skills or insights? Or is it just another diligent, super brilliant graduate student who tries out every research idea but never stops to develop insights?</p>
+
+<p>That’s the meta level of improvement that “recursive” stands for: whoever completes the loop, the agent or the system, is also improving itself at the same time.</p>
+
+<figure>
+<img src="/assets/img/rsi/si-vs-rsi.svg" alt="Two loop diagrams. Self-improvement: the agent proposes a change, a metric scores the solution, and only the solution gets better while the same model and harness are used every round. Recursive self-improvement: the same loop, plus an arrow that updates the agent itself, so both the solution and the agent get better." width="100%" />
+<figcaption>Self-improvement versus recursive self-improvement. In both, the agent proposes changes and a metric scores them, so the solution gets better every round. In RSI, the loop also updates the agent itself: its model or harness.</figcaption>
+</figure>
+
+<p>Well, think about how a good researcher or engineer would approach a problem. They don’t just keep their head down and try every solution they could ever think of. They learn from trial and error, and they gain insights as they explore. Eventually, they get better at solving that problem, or even that family of problems. This part of capability gets far too little attention.</p>
+
+<p>So in RSI, solving a problem and autonomously improving its solution is not enough. What also matters is the ability to keep learning from the problem and improve one’s own capability to solve it.</p>
+
+<h2 id="what-is-the-self-in-recursive-self-improvement">What is the “self” in recursive self-improvement?</h2>
+
+<p>A modern agentic system consists of three things: the LLM, the harness and the context. The LLM is the model’s weights. The harness is made up of the skills, workflow and prompts around the LLM. Together, they make up the “self” of an agent.</p>
+
+<figure>
+<img src="/assets/img/rsi/three-layers.svg" alt="Three boxes: the LLM and the harness grouped as the self, and the context as knowledge. In today's loops the LLM is never updated, the harness is rarely updated and the context accumulates." width="100%" />
+<figcaption>The three parts of an agentic system. The LLM and the harness form the self; the context is knowledge. In today's loops, only the context changes.</figcaption>
+</figure>
+
+<p>The agent is then put into a context. The context is all the artifacts the agent can draw on: files in the working directory, agent logs and memory systems. I keep the context out of the self, because accumulating knowledge does not equal improving oneself.</p>
+
+<p>In most “RSI” settings people talk about today, the agent works in a loop to optimize a solution for a certain task. The context gets updated with past failed attempts, logs and notes, but the other two layers, the language model itself and the harness, are usually not updated.<sup class="sn-ref"><a href="#note-partial">3</a></sup><span class="sidenote" id="note-partial"><span class="sn-label">Side note 3</span>A few systems are starting to touch the self. The <a href="https://arxiv.org/abs/2505.22954">Darwin Gödel Machine</a> and <a href="https://arxiv.org/abs/2603.19461">Hyperagents</a> rewrite the agent’s own code while the model stays frozen, and <a href="https://arxiv.org/abs/2506.10943">SEAL</a> lets a model write its own fine-tuning data. None of them closes the loop yet. Memory systems that only accumulate notes stay on the SI side.</span></p>
+
+<h2 id="why-does-this-matter-at-all">Why does this matter at all?</h2>
+
+<p>For those who have been working on autoresearch or RSI, this might sound familiar. You build an environment and an eval metric for your agent to loop on, and the hill-climbing curve is amazing at the beginning. Then, quickly, the curve plateaus, and your agent is cluelessly adjusting parameters or trying trivial fixes.<sup class="sn-ref"><a href="#note-prime">4</a></sup><span class="sidenote" id="note-prime"><span class="sn-label">Side note 4</span>Prime Intellect saw something similar at scale: across 153 autonomous runs on the nanoGPT speedrun, the models mostly rediscovered known ideas, and none produced a fundamentally new method [<a href="#ref-11">11</a>].</span></p>
+
+<!-- TODO figure idea: a human vs. agent hill-climbing curve, where the human curve doesn't plateau the same way. Needs real data, e.g. from the NanoProteinLM search runs. -->
+
+<p>The base model, and the agentic system built on top of it, is now strong enough to look at the history in its context and improve its solution recursively. But keeping the “self” fixed makes continual learning impossible: the system can’t actually learn and get better while it’s solving a particular problem, which is what humans do.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>What we are mostly building today under the name of RSI is SI. That is not to undermine how effective SI is. Engineers and researchers are actively working alongside SI agents that reflect and improve<sup class="sn-ref"><a href="#note-labs">5</a></sup><span class="sidenote" id="note-labs"><span class="sn-label">Side note 5</span>Frontier labs are a middle case. At OpenAI and Anthropic, researchers work with SI agents to build the next generation of the same models. That can count as RSI at another level, where the “self” is the model family [<a href="#ref-5">5</a>, <a href="#ref-6">6</a>]. But the process is not automatic, and it still takes a lot of human effort.</span>, though the insights still mostly come from human experts. It’s impressive performance all the same.</p>
+
+<p>So the goal of this post is not to undermine anyone’s efforts to build self-improvement. It’s a rethinking of RSI itself. There is so much hype about how much SI can achieve that we’re ignoring the part that makes it recursive: the continual learning capability of the model itself. In the next post, I’ll look at how we could actually evaluate that.</p>
+
+<h2 id="references">References</h2>
+
+<ol class="refs">
+<li id="ref-1">OfficeChai. <a href="https://officechai.com/ai/implausible-that-self-improvement-loops-will-run-infinitely-fast-jeff-dean/">"Implausible" that self-improvement loops will run infinitely fast: Jeff Dean</a>. November 2026. Report on Jeff Dean in conversation with Fei-Fei Li, Stanford, October 28, 2026 (<a href="https://www.youtube.com/watch?v=ooGKNwJWdb8">video</a>).</li>
+<li id="ref-2">Andrej Karpathy. <a href="https://github.com/karpathy/autoresearch">autoresearch</a>. March 2026.</li>
+<li id="ref-3"><a href="https://www.discoveryloop.com/">Discovery Loop</a>.</li>
+<li id="ref-4"><a href="https://mirendil.com/">Mirendil</a>.</li>
+<li id="ref-5">Anthropic. <a href="https://www.anthropic.com/institute/recursive-self-improvement">When AI builds itself</a>. June 2026.</li>
+<li id="ref-6">OpenAI. <a href="https://openai.com/index/introducing-gpt-5-3-codex/">Introducing GPT-5.3-Codex</a>. February 2026.</li>
+<li id="ref-7">Google DeepMind. <a href="https://deepmind.google/blog/alphaevolve-a-gemini-powered-coding-agent-for-designing-advanced-algorithms/">AlphaEvolve: A Gemini-powered coding agent for designing advanced algorithms</a>. May 2025.</li>
+<li id="ref-8">Recursive Superintelligence, Inc. <a href="https://www.recursive.com/articles/first-steps-toward-automated-ai-research">First steps toward automated AI research</a>. June 2026.</li>
+<li id="ref-9">Anthropic. <a href="https://www.anthropic.com/research/claude-uplifts-biomolecular-modeling">How Claude is uplifting biomolecular modeling</a>. September 2026.</li>
+<li id="ref-10">Vaishak Kumar. <a href="https://arxiv.org/abs/2603.04466">Act–Observe–Rewrite: Multimodal coding agents as in-context policy learners for robot manipulation</a>. March 2026.</li>
+<li id="ref-11">Elie Bakouch and Prime Intellect. <a href="https://www.primeintellect.ai/blog/measuring-autonomous-research">Measuring autonomous AI research</a>. August 2026.</li>
+<li id="ref-12">Adaption. <a href="https://www.adaptionlabs.ai/blog/autoscientist">AutoScientist: Automating the science of model training</a>. May 2026.</li>
+<li id="ref-13">Sequoia Capital, Training Data podcast. <a href="https://sequoiacap.com/podcast/how-ricursive-intelligences-founders-are-using-ai-to-shape-the-future-of-chip-design">How Ricursive Intelligence's founders are using AI to shape the future of chip design</a>.</li>
+</ol>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+  
+
+  
+
+
+        
+
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2026-11-01T00:00:00-07:00">November 1, 2026</time></p>
+
+
+      </footer>
+
+      
+<section class="page__share">
+  <h4 class="page__share-title">Share on</h4>
+
+  <a href="https://x.com/intent/tweet?text=The+Missing+R+in+RSI%20https%3A%2F%2Fjojoml.github.io%2Fblog%2F2026%2Fthe-missing-r-in-rsi%2F" class="btn btn--x" aria-label="Share on X" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on X">
+    <i class="fab fa-fw fa-x-twitter" aria-hidden="true"></i><span> X</span>
+  </a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fjojoml.github.io%2Fblog%2F2026%2Fthe-missing-r-in-rsi%2F" class="btn btn--facebook" aria-label="Share on Facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook">
+    <i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span>
+  </a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://jojoml.github.io/blog/2026/the-missing-r-in-rsi/" class="btn btn--linkedin" aria-label="Share on LinkedIn" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn">
+    <i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span>
+  </a>
+
+  <a href="https://bsky.app/intent/compose?text=The+Missing+R+in+RSI%20https%3A%2F%2Fjojoml.github.io%2Fblog%2F2026%2Fthe-missing-r-in-rsi%2F" class="btn btn--bluesky" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Bluesky">
+    <i class="fab fa-fw fa-bluesky" aria-hidden="true"></i><span> Bluesky</span>
+  </a>
+</section>
+
+
+      
+
+  <nav class="pagination" aria-label="Post pagination">
+    
+      <a href="/blog/2026/nanoproteinlm-agenticls/" class="pagination--pager" title="Hill-Climbing a Protein Language Model: A Taste of Autoresearch for Scientific Discovery">Previous</a>
+    
+    
+      <a href="#" class="pagination--pager disabled">Next</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    
+
+<div class="page__related">
+  
+  <h2 class="page__related-title">You May Also Enjoy</h2>
+  <div class="grid__wrapper">
+    
+      
+      
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc p-name" itemprop="headline">
+      
+        <a class="u-url" href="/blog/2026/nanoproteinlm-agenticls/" rel="permalink">Hill-Climbing a Protein Language Model: A Taste of Autoresearch for Scientific Discovery
+</a>
+      
+    </h2>
+    
+
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          5 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt p-summary" itemprop="description">Our AgenticLS 2026 workshop paper on turning protein language model training into an environment where agents can do research.
+</p>
+  </article>
+</div>
+
+    
+      
+      
+
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc p-name" itemprop="headline">
+      
+        <a class="u-url" href="/blog/2026/thoughts-on-autoresearch/" rel="permalink">Thoughts on autoresearch
+</a>
+      
+    </h2>
+    
+
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          2 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt p-summary" itemprop="description">Andrej Karpathy’s autoresearch repo has been getting a lot of attention because it frames research as a simple loop: edit a training file, run a fixed five-m...</p>
+  </article>
+</div>
+
+    
+  </div>
+</div>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-square-rss" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2026 <a href="https://jojoml.github.io">Home</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+  </body>
+</html>
